@@ -22,7 +22,7 @@ import scala.{Iterable => SIterable, Collection => SCollection}
 abstract class RichCollection[T, C[U] <: Collection[U]](collection: C[T]) extends RichIterable(collection) {
   protected def build[S]: C[S]
 
-  // TODO: Should toScala always perform in O(1) time?
+  // TODO: Should perform in O(1) time
   override def toScala: SCollection[T] =
     Implicits.richJIterator(collection.iterator).toScala.toList
 

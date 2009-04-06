@@ -20,6 +20,11 @@ collection in Scala (scala.collection.jcl). It is deficient in several ways:
 
 GOALS:
 
+0) Implicit conversions should be as conservative as possible. They should add
+   no methods beyond "foreach", "filter", "map", "flatMap", "toScala", and
+   "toJava". They should add no types, interfaces, or traits that are ever
+   used outside this package.
+
 With a single "import org.scala_tools.javautils.Implicits._", a user should
 be able to:
 
@@ -36,6 +41,9 @@ be able to:
      for (elem <- javaIterable) {
        ...
      }
+   
+   This rule should also hold for Iterable-like interfaces, namely Iterator
+   and Enumeration.
 
 2) Convert any Java collection into a Scala collection by calling "toScala".
    This operation should run in constant O(1) time.
@@ -47,6 +55,20 @@ Whenever possible, a user should be able to:
 
 4) Use filter, map, and flatMap on Java collections, exposing the full power
    of Scala's for-comprehensions. These methods should never modify the
-   collection they are called on, and should always return a new collection.
-   Whenever possible, the returned collection should be of the same type as
-   the collection on which the method was called.
+   collection they are called on, and should always return a new (strict)
+   collection. Whenever possible, the returned collection should be of the
+   same type as the collection on which the method was called.
+
+PROGRESS:
+
+2009-04-06
+Goal #1 has been reached. RichIterable, RichIterator, and RichEnumeration
+provide foreach to Java's Iterable, Iterator, and Enumeration.
+Goal #2 has been mostly reached. All Java classes and interfaces that are
+supported by scala.collection.jcl are provided with a "toScala" method.
+Some of the Java interfaces that are not supported by scala.collection.jcl
+have a "toScala" method that does not run in O(1) time. I'm debating whether
+it's worthwhile to use the jcl wrappers, or to make my own.
+Goal #3 is nowhere near completion. It will likely require a lot of wrappers,
+and jcl is not much help here.
+Goal #4 is kind-of met but I'm unhappy with it. Need to re-think my approach.
