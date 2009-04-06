@@ -1,0 +1,52 @@
+Utilities for dealing with Java and Scala collections.
+
+MOTIVATION:
+
+The Scala standard library includes a set of utilities for working with Java
+collection in Scala (scala.collection.jcl). It is deficient in several ways:
+
+1) It neglects several important Java interfaces, most notably: Enumeration,
+   Iterator, Iterable, and Collection.
+
+2) There is no way to convert from an arbitrary Scala collection to a Java
+   collection. It is suitable for those wishing to use Java collections via
+   Scala collection interfaces, but is unsuitable for those wishing to use
+   Scala collections with legacy Java libraries that expect Java collections.
+
+3) It is reckless in its use of implicits. The implicit conversions in
+   scala.collection.jcl.Conversions are dangerous and should not be trusted.
+   They "massage" types in ways that can be unpredictable for users not
+   intimately familiar with scala.collections.jcl.
+
+GOALS:
+
+With a single "import org.scala_tools.javautils.Implicits._", a user should
+be able to:
+
+1) Use "foreach" (and hence the imperative for-comprehension syntax) with any
+   Java class that implements java.util.Iterable[T]. The straightforward
+   translation of Java for-each syntax:
+   
+     for (E elem : javaIterable) {
+       ...
+     }
+    
+   should work in Scala:
+   
+     for (elem <- javaIterable) {
+       ...
+     }
+
+2) Convert any Java collection into a Scala collection by calling "toScala".
+   This operation should run in constant O(1) time.
+
+3) Convert any Scala collection into a Java collection by calling "toJava"
+   This operation should run in constant O(1) time.
+
+Whenever possible, a user should be able to:
+
+4) Use filter, map, and flatMap on Java collections, exposing the full power
+   of Scala's for-comprehensions. These methods should never modify the
+   collection they are called on, and should always return a new collection.
+   Whenever possible, the returned collection should be of the same type as
+   the collection on which the method was called.
