@@ -17,11 +17,17 @@
 package org.scala_tools.javautils.s2j
 
 import java.lang.{Iterable => JIterable}
+import java.util.{Collection => JCollection}
+import scala.collection.jcl.{IterableWrapper => JCLIterableWrapper}
 import wrappers._
 
 class RichIterable[T](iterable: Iterable[T]) {
-  def toJava: JIterable[T] = new IterableWrapper[T] {
-    type Wrapped = Iterable[T]
-    protected val underlying = iterable
+  def toJava: JIterable[T] = iterable match {
+    case iw: JCLIterableWrapper[_] =>
+      iw.underlying.asInstanceOf[JCollection[T]]
+    case _ => new IterableWrapper[T] {
+      type Wrapped = Iterable[T]
+      protected val underlying = iterable
+    }
   }
 }

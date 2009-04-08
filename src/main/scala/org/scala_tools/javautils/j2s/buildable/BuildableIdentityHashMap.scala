@@ -14,11 +14,11 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s
+package org.scala_tools.javautils.j2s.buildable
 
-import java.util.TreeMap
-import scala.collection.jcl.{TreeMap => STreeMap}
+import java.util.IdentityHashMap
+import scala.collection.jcl.{IdentityHashMap => SIdentityHashMap}
 
-class RichTreeMap[K, V](map: TreeMap[K, V]) extends RichMap[K, V, TreeMap](map) {
-  protected def build[X, Y]: TreeMap[X, Y] = new TreeMap[X, Y]
+class BuildableIdentityHashMap[K, V](map: IdentityHashMap[K, V]) extends BuildableMap[K, V, IdentityHashMap](map) {
+  protected def build[X, Y]: IdentityHashMap[X, Y] = new IdentityHashMap[X, Y]
 }

@@ -14,12 +14,11 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s
+package org.scala_tools.javautils.j2s.buildable
 
-import java.util.Hashtable
-import scala.collection.jcl.{Hashtable => SHashtable}
+import java.util.WeakHashMap
+import scala.collection.jcl.{WeakHashMap => SWeakHashMap}
 
-class RichHashtable[K, V](map: Hashtable[K, V]) extends RichMap[K, V, Hashtable](map) {
-  protected def build[X, Y]: Hashtable[X, Y] = new Hashtable[X, Y]
-  override def toScala: SHashtable[K, V] = new SHashtable(map)
+class BuildableWeakHashMap[K, V](map: WeakHashMap[K, V]) extends BuildableMap[K, V, WeakHashMap](map) {
+  protected def build[X, Y]: WeakHashMap[X, Y] = new WeakHashMap[X, Y]
 }

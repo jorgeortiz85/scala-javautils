@@ -14,12 +14,11 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s
+package org.scala_tools.javautils.j2s.buildable
 
-import java.util.HashSet
-import scala.collection.jcl.{HashSet => SHashSet}
+import java.util.LinkedHashSet
+import scala.collection.jcl.{LinkedHashSet => SLinkedHashSet}
 
-class RichHashSet[T](set: HashSet[T]) extends RichSet[T, HashSet](set) {
-  protected def build[S]: HashSet[S] = new HashSet[S]
-  override def toScala: SHashSet[T] = new SHashSet(set)
+class BuildableLinkedHashSet[T](set: LinkedHashSet[T]) extends BuildableSet[T, LinkedHashSet](set) {
+  protected def build[S] = new LinkedHashSet[S]
 }

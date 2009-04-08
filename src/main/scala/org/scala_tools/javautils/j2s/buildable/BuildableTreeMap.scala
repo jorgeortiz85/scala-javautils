@@ -14,11 +14,11 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s
+package org.scala_tools.javautils.j2s.buildable
 
-import java.util.TreeSet
-import scala.collection.jcl.{TreeSet => STreeSet}
+import java.util.TreeMap
+import scala.collection.jcl.{TreeMap => STreeMap}
 
-class RichTreeSet[T](set: TreeSet[T]) extends RichSet[T, TreeSet](set) {
-  protected def build[S]: TreeSet[S] = new TreeSet[S]
+class BuildableTreeMap[K, V](map: TreeMap[K, V]) extends BuildableMap[K, V, TreeMap](map) {
+  protected def build[X, Y]: TreeMap[X, Y] = new TreeMap[X, Y]
 }

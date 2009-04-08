@@ -14,12 +14,11 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s
+package org.scala_tools.javautils.j2s.buildable
 
-import java.util.Set
-import scala.collection.jcl.Conversions
-import scala.collection.mutable.{Set => SSet}
+import java.util.ArrayList
+import scala.collection.jcl.{ArrayList => SArrayList}
 
-class RichSet[T](set: Set[T]) {
-  def toScala: SSet[T] = Conversions.convertSet(set)
+class BuildableArrayList[T](list: ArrayList[T]) extends BuildableList[T, ArrayList](list) {
+  protected def build[S] = new ArrayList[S]
 }

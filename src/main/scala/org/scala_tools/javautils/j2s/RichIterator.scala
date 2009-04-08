@@ -18,14 +18,19 @@ package org.scala_tools.javautils.j2s
 
 import java.util.Iterator
 import scala.{Iterator => SIterator}
+import org.scala_tools.javautils.s2j.wrappers.IteratorWrapper
 
 class RichIterator[T](iterator: Iterator[T]) {
   def foreach(fn: T => Unit): Unit =
     while (iterator.hasNext)
       fn(iterator.next)
 
-  def toScala: SIterator[T] = new SIterator[T] {
-    def hasNext = iterator.hasNext
-    def next() = iterator.next
+  def toScala: SIterator[T] = iterator match {
+    case iw: IteratorWrapper[_] =>
+      iw.toScala.asInstanceOf[SIterator[T]]
+    case _ => new SIterator[T] {
+      def hasNext = iterator.hasNext
+      def next() = iterator.next
+    }
   }
 }

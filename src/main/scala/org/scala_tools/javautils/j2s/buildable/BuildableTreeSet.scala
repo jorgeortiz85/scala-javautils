@@ -14,12 +14,11 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s
+package org.scala_tools.javautils.j2s.buildable
 
-import java.util.WeakHashMap
-import scala.collection.jcl.{WeakHashMap => SWeakHashMap}
+import java.util.TreeSet
+import scala.collection.jcl.{TreeSet => STreeSet}
 
-class RichWeakHashMap[K, V](map: WeakHashMap[K, V]) extends RichMap[K, V, WeakHashMap](map) {
-  protected def build[X, Y]: WeakHashMap[X, Y] = new WeakHashMap[X, Y]
-  override def toScala: SWeakHashMap[K, V] = new SWeakHashMap(map)
+class BuildableTreeSet[T](set: TreeSet[T]) extends BuildableSet[T, TreeSet](set) {
+  protected def build[S]: TreeSet[S] = new TreeSet[S]
 }

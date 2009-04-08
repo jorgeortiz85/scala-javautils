@@ -14,12 +14,11 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s
+package org.scala_tools.javautils.j2s.buildable
 
-import java.util.IdentityHashMap
-import scala.collection.jcl.{IdentityHashMap => SIdentityHashMap}
+import java.util.LinkedList
+import scala.collection.jcl.{LinkedList => SLinkedList}
 
-class RichIdentityHashMap[K, V](map: IdentityHashMap[K, V]) extends RichMap[K, V, IdentityHashMap](map) {
-  protected def build[X, Y]: IdentityHashMap[X, Y] = new IdentityHashMap[X, Y]
-  override def toScala: SIdentityHashMap[K, V] = new SIdentityHashMap(map)
+class BuildableLinkedList[T](list: LinkedList[T]) extends BuildableList[T, LinkedList](list) {
+  protected def build[S] = new LinkedList[S]
 }

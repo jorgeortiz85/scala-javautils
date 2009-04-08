@@ -17,11 +17,16 @@
 package org.scala_tools.javautils.s2j
 
 import java.util.{Iterator => JIterator}
+import scala.collection.jcl.MutableIterator.{Wrapper => JCLIteratorWrapper}
 import wrappers._
 
 class RichIterator[T](iterator: Iterator[T]) {
-  def toJava: JIterator[T] = new IteratorWrapper[T] {
-    type Wrapped = Iterator[T]
-    protected val underlying = iterator
+  def toJava: JIterator[T] = iterator match {
+    case iw: JCLIteratorWrapper[_] =>
+      iw.underlying.asInstanceOf[JIterator[T]]
+    case _ => new IteratorWrapper[T] {
+      type Wrapped = Iterator[T]
+      protected val underlying = iterator
+    }
   }
 }

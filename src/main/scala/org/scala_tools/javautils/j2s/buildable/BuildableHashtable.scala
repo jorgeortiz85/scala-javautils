@@ -14,12 +14,10 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s
+package org.scala_tools.javautils.j2s.buildable
 
-import java.util.LinkedHashMap
-import scala.collection.jcl.{LinkedHashMap => SLinkedHashMap}
+import java.util.Hashtable
 
-class RichLinkedHashMap[K, V](map: LinkedHashMap[K, V]) extends RichMap[K, V, LinkedHashMap](map) {
-  protected def build[X, Y] = new LinkedHashMap[X, Y]
-  override def toScala: SLinkedHashMap[K, V] = new SLinkedHashMap(map)
+class BuildableHashtable[K, V](map: Hashtable[K, V]) extends BuildableMap[K, V, Hashtable](map) {
+  protected def build[X, Y]: Hashtable[X, Y] = new Hashtable[X, Y]
 }

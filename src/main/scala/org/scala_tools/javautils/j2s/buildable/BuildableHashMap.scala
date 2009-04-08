@@ -14,12 +14,11 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s
+package org.scala_tools.javautils.j2s.buildable
 
-import java.util.ArrayList
-import scala.collection.jcl.{ArrayList => SArrayList}
+import java.util.HashMap
+import scala.collection.jcl.{HashMap => SHashMap}
 
-class RichArrayList[T](list: ArrayList[T]) extends RichList[T, ArrayList](list) {
-  protected def build[S] = new ArrayList[S]
-  override def toScala: SArrayList[T] = new SArrayList(list)
+class BuildableHashMap[K, V](map: HashMap[K, V]) extends BuildableMap[K, V, HashMap](map) {
+  protected def build[X, Y]: HashMap[X, Y] = new HashMap[X, Y]
 }

@@ -14,12 +14,11 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s
+package org.scala_tools.javautils.j2s.buildable
 
-import java.util.LinkedList
-import scala.collection.jcl.{LinkedList => SLinkedList}
+import java.util.List
+import scala.collection.jcl.{Conversions, BufferWrapper}
 
-class RichLinkedList[T](list: LinkedList[T]) extends RichList[T, LinkedList](list) {
-  protected def build[S] = new LinkedList[S]
-  override def toScala: SLinkedList[T] = new SLinkedList(list)
+abstract class BuildableList[T, C[U] <: List[U]](list: C[T]) extends BuildableCollection[T, C](list) {
+  protected def build[S]: C[S]
 }

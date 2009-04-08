@@ -14,12 +14,11 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s
+package org.scala_tools.javautils.j2s.buildable
 
-import java.util.HashMap
-import scala.collection.jcl.{HashMap => SHashMap}
+import java.util.HashSet
+import scala.collection.jcl.{HashSet => SHashSet}
 
-class RichHashMap[K, V](map: HashMap[K, V]) extends RichMap[K, V, HashMap](map) {
-  protected def build[X, Y]: HashMap[X, Y] = new HashMap[X, Y]
-  override def toScala: SHashMap[K, V] = new SHashMap(map)
+class BuildableHashSet[T](set: HashSet[T]) extends BuildableSet[T, HashSet](set) {
+  protected def build[S]: HashSet[S] = new HashSet[S]
 }
