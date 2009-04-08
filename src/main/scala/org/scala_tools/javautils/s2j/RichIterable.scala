@@ -16,11 +16,12 @@
  **/
 package org.scala_tools.javautils.s2j
 
-object Implicits extends Implicits
+import java.lang.{Iterable => JIterable}
+import wrappers._
 
-trait Implicits {
-  implicit def richSIterator[T](iterator: Iterator[T]) = new RichIterator(iterator)
-  implicit def richSIterable[T](iterable: Iterable[T]) = new RichIterable(iterable)
-  implicit def richSCollection[T](collection: Collection[T]) = new RichCollection(collection)
-  implicit def richSSeq[T](seq: Seq[T]) = new RichSeq(seq)
+class RichIterable[T](iterable: Iterable[T]) {
+  def toJava: JIterable[T] = new IterableWrapper[T] {
+    type Wrapped = Iterable[T]
+    protected val underlying = iterable
+  }
 }

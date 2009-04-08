@@ -17,7 +17,10 @@
 package org.scala_tools.javautils.s2j.wrappers
 
 import java.lang.{Iterable => JIterable}
+import java.util.{Iterator => JIterator}
 
-class IterableWrapper[T](val underlying: Iterable[T]) extends JIterable[T] {
-  def iterator = Implicits.richSIterator(underlying.elements).toJava
+trait IterableWrapper[T] extends JIterable[T] with Wrapper {
+  type Wrapped <: Iterable[T]
+  def iterator: JIterator[T] =
+    Implicits.richSIterator(underlying.elements).toJava
 }

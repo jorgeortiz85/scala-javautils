@@ -14,13 +14,17 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j
+package org.scala_tools.javautils.s2j.wrappers
 
-object Implicits extends Implicits
-
-trait Implicits {
-  implicit def richSIterator[T](iterator: Iterator[T]) = new RichIterator(iterator)
-  implicit def richSIterable[T](iterable: Iterable[T]) = new RichIterable(iterable)
-  implicit def richSCollection[T](collection: Collection[T]) = new RichCollection(collection)
-  implicit def richSSeq[T](seq: Seq[T]) = new RichSeq(seq)
+trait Wrapper {
+  type Wrapped
+  protected def underlying: Wrapped
+  override def toString =
+    "JavaWrapper("+underlying.toString+")"
+  override def hashCode = underlying.hashCode
+  override def equals(that: Any): Boolean = that match {
+    case that: Wrapper => underlying equals that.underlying
+    case _ => false
+  }
+  def toScala: Wrapped = underlying
 }

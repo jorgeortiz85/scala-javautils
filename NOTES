@@ -1,0 +1,29 @@
+Scala to Java conversions
+
+scala.
+  Array[T] (needs no conversion)
+  Iterable[T]           Iterable<T> (SIterable has no size(), otherwise it'd be a JCollection)
+  Collection[T]         Collection<T>
+  Seq[T]                List<T>
+  RandomAccessSeq[T]    List<T>
+  List[T]               List<T>
+  Stream[T]             List<T>
+  Option[T] ?
+  
+  scala.collection.
+    Map[K, V]           
+    Set[T]              Set<T>
+    
+    scala.collection.immutable.
+      Map[K, V]         
+      Set[T]            Set<T>
+      
+    scala.collection.mutable.
+      Buffer[T]
+      Map[T]
+      Set[T]
+      ArrayBuffer[T]
+      ListBuffer[T]
+      HashMap[K, V]
+      HashSet[T]
+      

@@ -17,11 +17,10 @@
 package org.scala_tools.javautils.s2j.wrappers
 
 import java.util.{Iterator => JIterator}
-import scala.{Iterator => SIterator}
 
-class IteratorWrapper[T](val underlying: SIterator[T]) extends JIterator[T] {
+trait IteratorWrapper[T] extends JIterator[T] with Wrapper {
+  type Wrapped <: Iterator[T]
   def hasNext: Boolean = underlying.hasNext
   def next(): T = underlying.next
   def remove() = throw new UnsupportedOperationException
-  def toScala = underlying
 }

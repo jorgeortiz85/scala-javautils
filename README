@@ -72,3 +72,12 @@ it's worthwhile to use the jcl wrappers, or to make my own.
 Goal #3 is nowhere near completion. It will likely require a lot of wrappers,
 and jcl is not much help here.
 Goal #4 is kind-of met but I'm unhappy with it. Need to re-think my approach.
+
+2009-04-08
+Made progress towards Goal #3. Added NOTES as to what conversions can be
+expected.
+
+KNOWN BUGS:
+
+Objects that are s2j.wrappers.Wrapped are not unwrapped by toScala. Instead,
+another layer of wrapping is added.

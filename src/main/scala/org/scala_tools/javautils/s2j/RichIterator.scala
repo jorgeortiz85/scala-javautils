@@ -20,5 +20,8 @@ import java.util.{Iterator => JIterator}
 import wrappers._
 
 class RichIterator[T](iterator: Iterator[T]) {
-  def toJava: JIterator[T] = new IteratorWrapper(iterator)
+  def toJava: JIterator[T] = new IteratorWrapper[T] {
+    type Wrapped = Iterator[T]
+    protected val underlying = iterator
+  }
 }
