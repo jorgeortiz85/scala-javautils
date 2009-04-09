@@ -25,7 +25,6 @@ class RichJCollection[T](collection: Collection[T]) {
   def toScala: SCollection[T] = collection match {
     case cw: JCollectionWrapper[_] =>
       cw.toScala.asInstanceOf[SCollection[T]]
-    // TODO: Should perform in O(1) time
     case _ => new SCollectionWrapper[T] {
       type Wrapped = Collection[T]
       protected val underlying = collection

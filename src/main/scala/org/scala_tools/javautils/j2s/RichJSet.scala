@@ -18,11 +18,16 @@ package org.scala_tools.javautils.j2s
 
 import java.util.Set
 import scala.collection.{Set => SSet}
+import org.scala_tools.javautils.s2j.wrappers.JSetWrapper
 import org.scala_tools.javautils.j2s.wrappers.SSetWrapper
 
 class RichJSet[T](set: Set[T]) {
-  def toScala: SSet[T] = new SSetWrapper[T] {
-    type Wrapped = Set[T]
-    protected val underlying = set
+  def toScala: SSet[T] = set match {
+    case sw: JSetWrapper[_] =>
+      sw.toScala.asInstanceOf[SSet[T]]
+    case _ => new SSetWrapper[T] {
+      type Wrapped = Set[T]
+      protected val underlying = set
+    }
   }
 }

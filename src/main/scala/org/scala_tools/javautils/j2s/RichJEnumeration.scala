@@ -18,15 +18,20 @@ package org.scala_tools.javautils.j2s
 
 import java.util.Enumeration
 import scala.{Iterator => SIterator}
-import org.scala_tools.javautils.j2s.wrappers._
+import org.scala_tools.javautils.j2s.wrappers.SEnumerationWrapper
+import org.scala_tools.javautils.s2j.wrappers.JEnumerationWrapper
 
 class RichJEnumeration[T](enumeration: Enumeration[T]) {
   def foreach(fn: T => Unit): Unit =
     while (enumeration.hasMoreElements)
       fn(enumeration.nextElement)
   
-  def toScala: SIterator[T] = new SEnumerationWrapper[T] {
-    type Wrapped = Enumeration[T]
-    protected val underlying = enumeration
+  def toScala: SIterator[T] = enumeration match {
+    case ew: JEnumerationWrapper[_] =>
+      ew.toScala.asInstanceOf[SIterator[T]]
+    case _ => new SEnumerationWrapper[T] {
+      type Wrapped = Enumeration[T]
+      protected val underlying = enumeration
+    }
   }
 }

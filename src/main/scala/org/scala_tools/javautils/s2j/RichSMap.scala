@@ -18,12 +18,16 @@ package org.scala_tools.javautils.s2j
 
 import java.util.{Map => JMap}
 import scala.collection.Map
-import org.scala_tools.javautils.s2j.wrappers._
+import scala.collection.jcl.{MapWrapper => JCLMapWrapper}
+import org.scala_tools.javautils.s2j.wrappers.JMapWrapper
+import org.scala_tools.javautils.j2s.wrappers.SMapWrapper
 
 class RichSMap[K, V](map: Map[K, V]) {
   def toJava: JMap[K, V] = map match {
-    // case iw: JCLIterableWrapper[_] =>
-    //   iw.underlying.asInstanceOf[JCollection[T]]
+    case mw: JCLMapWrapper[_, _] =>
+      mw.underlying.asInstanceOf[JMap[K, V]]
+    case mw: SMapWrapper[_, _] =>
+      mw.toJava.asInstanceOf[JMap[K, V]]
     case _ => new JMapWrapper[K, V] {
       type Wrapped = Map[K, V]
       protected val underlying = map

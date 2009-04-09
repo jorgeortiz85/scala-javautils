@@ -25,6 +25,8 @@ class RichSIterator[T](iterator: Iterator[T]) {
   def toJava: JIterator[T] = iterator match {
     case iw: JCLIteratorWrapper[_] =>
       iw.underlying.asInstanceOf[JIterator[T]]
+    case iw: SIteratorWrapper[_] =>
+      iw.toJava.asInstanceOf[JIterator[T]]
     case _ => new JIteratorWrapper[T] {
       type Wrapped = Iterator[T]
       protected val underlying = iterator

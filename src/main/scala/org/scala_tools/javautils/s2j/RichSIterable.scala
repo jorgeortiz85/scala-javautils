@@ -19,12 +19,15 @@ package org.scala_tools.javautils.s2j
 import java.lang.{Iterable => JIterable}
 import java.util.{Collection => JCollection}
 import scala.collection.jcl.{IterableWrapper => JCLIterableWrapper}
-import wrappers._
+import org.scala_tools.javautils.s2j.wrappers.JIterableWrapper
+import org.scala_tools.javautils.j2s.wrappers.SIterableWrapper
 
 class RichSIterable[T](iterable: Iterable[T]) {
   def toJava: JIterable[T] = iterable match {
     case iw: JCLIterableWrapper[_] =>
       iw.underlying.asInstanceOf[JCollection[T]]
+    case iw: SIterableWrapper[_] =>
+      iw.toJava.asInstanceOf[JIterable[T]]
     case _ => new JIterableWrapper[T] {
       type Wrapped = Iterable[T]
       protected val underlying = iterable

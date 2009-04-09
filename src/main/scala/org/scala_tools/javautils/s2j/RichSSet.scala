@@ -17,14 +17,17 @@
 package org.scala_tools.javautils.s2j
 
 import java.util.{Set => JSet}
-import scala.collection.jcl.{IterableWrapper => JCLIterableWrapper}
+import scala.collection.jcl.{SetWrapper => JCLSetWrapper}
 import scala.collection.Set
-import org.scala_tools.javautils.s2j.wrappers._
+import org.scala_tools.javautils.s2j.wrappers.JSetWrapper
+import org.scala_tools.javautils.j2s.wrappers.SSetWrapper
 
 class RichSSet[T](set: Set[T]) {
   def toJava: JSet[T] = set match {
-    // case iw: JCLIterableWrapper[_] =>
-    //   iw.underlying.asInstanceOf[JCollection[T]]
+    case sw: JCLSetWrapper[_] =>
+      sw.underlying.asInstanceOf[JSet[T]]
+    case sw: SSetWrapper[_] =>
+      sw.toJava.asInstanceOf[JSet[T]]
     case _ => new JSetWrapper[T] {
       type Wrapped = Set[T]
       protected val underlying = set
