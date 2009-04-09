@@ -21,7 +21,15 @@ import scala.{Iterable => SIterable, Collection => SCollection}
 import org.scala_tools.javautils.j2s.wrappers.SCollectionWrapper
 import org.scala_tools.javautils.s2j.wrappers.JCollectionWrapper
 
-class RichJCollection[T](collection: Collection[T]) {
+class RichJCollection[T, C[U] <: Collection[U]](collection: C[T]) {
+  // def map[U](fn: T => U)(implicit build: Build[C[U]]): C[U] = {
+  //   val rv = build()
+  //   Implicits.richJIterable(collection).foreach { e =>
+  //     rv.add(fn(e))
+  //   }
+  //   rv
+  // }
+  
   def toScala: SCollection[T] = collection match {
     case cw: JCollectionWrapper[_] =>
       cw.toScala.asInstanceOf[SCollection[T]]

@@ -77,7 +77,11 @@ Goal #4 is kind-of met but I'm unhappy with it. Need to re-think my approach.
 Made progress towards Goal #3. Added NOTES as to what conversions can be
 expected.
 
+2009-04-09
+Goals #2, and #3 are now mostly met. No attempt has been made to implement
+efficient wrappers. Also, mutability has not been implemented. My new approach
+for Goal #4 blows up the type checker. Oops.
+
 KNOWN BUGS:
 
-Objects that are s2j.wrappers.Wrapped are not unwrapped by toScala. Instead,
-another layer of wrapping is added.
+Wrapped collections can't be modified, only read.
