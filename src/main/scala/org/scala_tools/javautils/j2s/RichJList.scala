@@ -17,8 +17,11 @@
 package org.scala_tools.javautils.j2s
 
 import java.util.List
-import scala.collection.jcl.{Conversions, BufferWrapper}
+import org.scala_tools.javautils.j2s.wrappers.SListWrapper
 
 class RichJList[T](list: List[T]) {
-  def toScala: Seq[T] = Conversions.convertList(list)
+  def toScala: Seq[T] = new SListWrapper[T] {
+    type Wrapped = List[T]
+    protected val underlying = list
+  }
 }

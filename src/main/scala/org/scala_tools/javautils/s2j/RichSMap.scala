@@ -14,10 +14,19 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.s2j
 
-trait JWrapper extends Wrapper {
-  protected val wrapperType = "Java"
-  def toScala: Wrapped = underlying
-  def toJava: this.type = this
+import java.util.{Map => JMap}
+import scala.collection.Map
+import org.scala_tools.javautils.s2j.wrappers._
+
+class RichSMap[K, V](map: Map[K, V]) {
+  def toJava: JMap[K, V] = map match {
+    // case iw: JCLIterableWrapper[_] =>
+    //   iw.underlying.asInstanceOf[JCollection[T]]
+    case _ => new JMapWrapper[K, V] {
+      type Wrapped = Map[K, V]
+      protected val underlying = map
+    }
+  }
 }

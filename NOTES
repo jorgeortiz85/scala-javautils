@@ -14,16 +14,16 @@ scala.
   Option[?]         ???
   
   scala.collection.
-    Map           
+    Map             Map
     Set             Set
     
     scala.collection.immutable.
-      Map         
+      Map           Map
       Set           Set
       
     scala.collection.mutable.
       Buffer        Queue / Deque[6?]
-      Map
+      Map           Map
       Set           Set
       ArrayBuffer
       ListBuffer
@@ -44,3 +44,5 @@ java.util.
   List              Seq
   Queue             ???
   Deque [6]         Buffer
+  Map               collection.Map
+  Set               collection.Set

@@ -16,8 +16,9 @@
  **/
 package org.scala_tools.javautils.s2j.wrappers
 
-trait JWrapper extends Wrapper {
-  protected val wrapperType = "Java"
-  def toScala: Wrapped = underlying
-  def toJava: this.type = this
+import java.util.{Map => JMap, Set => JSet, Collection => JCollection}
+import scala.collection.Set
+
+trait JSetWrapper[T] extends JSet[T] with JCollectionWrapper[T] {
+  type Wrapped <: Set[T]
 }

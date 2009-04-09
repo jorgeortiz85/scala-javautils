@@ -29,7 +29,7 @@ class RichJIterable[T](iterable: Iterable[T]) {
     case iw: JIterableWrapper[_] => iw.toScala.asInstanceOf[SIterable[T]]
     case _ => new SIterableWrapper[T] {
       type Wrapped = Iterable[T]
-      val underlying = iterable
+      protected val underlying = iterable
     }
   }
 }

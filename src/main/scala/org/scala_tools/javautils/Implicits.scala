@@ -16,4 +16,7 @@
  **/
 package org.scala_tools.javautils
 
-object Implicits extends j2s.Implicits with s2j.Implicits
+import org.scala_tools.javautils.j2s.JImplicits
+import org.scala_tools.javautils.s2j.SImplicits
+
+object Implicits extends SImplicits with JImplicits

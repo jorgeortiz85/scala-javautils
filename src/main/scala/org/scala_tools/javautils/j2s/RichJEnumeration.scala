@@ -27,6 +27,6 @@ class RichJEnumeration[T](enumeration: Enumeration[T]) {
   
   def toScala: SIterator[T] = new SEnumerationWrapper[T] {
     type Wrapped = Enumeration[T]
-    val underlying = enumeration
+    protected val underlying = enumeration
   }
 }

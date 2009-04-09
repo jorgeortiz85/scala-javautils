@@ -14,13 +14,22 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j
+package org.scala_tools.javautils.j2s.wrappers
 
-object Implicits extends Implicits
+import java.util.Map
+import scala.collection.{Map => SMap}
 
-trait Implicits {
-  implicit def richSIterator[T](iterator: Iterator[T]) = new RichSIterator(iterator)
-  implicit def richSIterable[T](iterable: Iterable[T]) = new RichSIterable(iterable)
-  implicit def richSCollection[T](collection: Collection[T]) = new RichSCollection(collection)
-  implicit def richSSeq[T](seq: Seq[T]) = new RichSSeq(seq)
+trait SMapWrapper[K, V] extends SMap[K, V] with SWrapper {
+  type Wrapped <: Map[K, V]
+  
+  def get(key: K): Option[V] =
+    if (underlying.containsKey(key))
+      Some(underlying.get(key))
+    else
+      None
+  def size = underlying.size
+  def elements =
+    Implicits.richJIterator(underlying.entrySet.iterator).toScala.map { entry =>
+      (entry.getKey, entry.getValue)
+    }
 }

@@ -17,9 +17,12 @@
 package org.scala_tools.javautils.j2s
 
 import java.util.Set
-import scala.collection.jcl.Conversions
-import scala.collection.mutable.{Set => SSet}
+import scala.collection.{Set => SSet}
+import org.scala_tools.javautils.j2s.wrappers.SSetWrapper
 
 class RichJSet[T](set: Set[T]) {
-  def toScala: SSet[T] = Conversions.convertSet(set)
+  def toScala: SSet[T] = new SSetWrapper[T] {
+    type Wrapped = Set[T]
+    protected val underlying = set
+  }
 }

@@ -21,9 +21,9 @@ import java.util.{Iterator, ArrayList, HashSet, HashMap, Enumeration, Hashtable,
   IdentityHashMap, LinkedHashMap, LinkedHashSet, LinkedList, TreeMap, TreeSet, WeakHashMap,
   List, Map, Set}
 
-object Implicits extends Implicits
+object JImplicits extends JImplicits
 
-trait Implicits {
+trait JImplicits {
   implicit def richJEnumeration[T](enumeration: Enumeration[T]) = new RichJEnumeration(enumeration)
   implicit def richJIterator[T](iterator: Iterator[T]) = new RichJIterator(iterator)
   implicit def richJIterable[T](iterable: Iterable[T]) = new RichJIterable(iterable)

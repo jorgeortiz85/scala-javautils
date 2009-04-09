@@ -19,9 +19,9 @@ package org.scala_tools.javautils
 trait Wrapper {
   type Wrapped
   protected def underlying: Wrapped
-  protected def stringPrefix: String
+  protected def wrapperType: String
   override def toString =
-    stringPrefix+"("+underlying.toString+")"
+    wrapperType+"Wrapper("+underlying.toString+")"
   override def hashCode = underlying.hashCode
   override def equals(that: Any): Boolean = that match {
     case that: Wrapper => underlying equals that.underlying

@@ -14,10 +14,20 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.s2j
 
-trait JWrapper extends Wrapper {
-  protected val wrapperType = "Java"
-  def toScala: Wrapped = underlying
-  def toJava: this.type = this
+import java.util.{Set => JSet}
+import scala.collection.jcl.{IterableWrapper => JCLIterableWrapper}
+import scala.collection.Set
+import org.scala_tools.javautils.s2j.wrappers._
+
+class RichSSet[T](set: Set[T]) {
+  def toJava: JSet[T] = set match {
+    // case iw: JCLIterableWrapper[_] =>
+    //   iw.underlying.asInstanceOf[JCollection[T]]
+    case _ => new JSetWrapper[T] {
+      type Wrapped = Set[T]
+      protected val underlying = set
+    }
+  }
 }

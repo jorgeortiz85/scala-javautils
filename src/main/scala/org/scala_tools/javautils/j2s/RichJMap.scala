@@ -17,12 +17,15 @@
 package org.scala_tools.javautils.j2s
 
 import java.util.Map
-import scala.collection.jcl.{Conversions, MapWrapper}
-import scala.collection.mutable.ArrayBuffer
+import scala.collection.{Map => SMap}
 import scala.Function.untupled
+import org.scala_tools.javautils.j2s.wrappers.SMapWrapper
 
 class RichJMap[K, V](map: Map[K, V]) {
-  def toScala: MapWrapper[K, V] = Conversions.convertMap(map)
+  def toScala: SMap[K, V] = new SMapWrapper[K, V] {
+    type Wrapped = Map[K, V]
+    protected val underlying = RichJMap.this.map
+  }
 
   def foreach(fn: Tuple2[K, V] => Unit): Unit =
     foreach(untupled(fn))

@@ -25,20 +25,20 @@ trait JCollectionWrapper[T] extends JIterableWrapper[T] with JCollection[T] {
   def add(o: T): Boolean =
     throw new UnsupportedOperationException
   def addAll(c: JCollection[_ <: T]): Boolean =
-    j2s.Implicits.richJIterable(c).toScala.forall(this add _)
+    Implicits.richJIterable(c).toScala.forall(this add _)
   def clear(): Unit =
     throw new UnsupportedOperationException
   def remove(o: AnyRef): Boolean =
     throw new UnsupportedOperationException
   def removeAll(c: JCollection[_]): Boolean =
-    j2s.Implicits.richJIterable(c).toScala.forall(o => this.remove(o.asInstanceOf[AnyRef]))
+    Implicits.richJIterable(c).toScala.forall(o => this remove o.asInstanceOf[AnyRef])
   def retainAll(c: JCollection[_]): Boolean =
     throw new UnsupportedOperationException
 
   def contains(o: AnyRef): Boolean =
     underlying.exists(_ == o)
   def containsAll(c: JCollection[_]): Boolean =
-    j2s.Implicits.richJIterable(c).toScala.forall(o => this.contains(o.asInstanceOf[AnyRef]))
+    Implicits.richJIterable(c).toScala.forall(o => this contains o.asInstanceOf[AnyRef])
   def isEmpty(): Boolean =
     underlying.isEmpty
   def size(): Int =

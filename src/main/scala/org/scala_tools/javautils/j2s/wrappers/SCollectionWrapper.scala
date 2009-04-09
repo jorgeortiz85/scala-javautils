@@ -14,10 +14,13 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.j2s.wrappers
 
-trait JWrapper extends Wrapper {
-  protected val wrapperType = "Java"
-  def toScala: Wrapped = underlying
-  def toJava: this.type = this
+import java.util.Collection
+import scala.{Collection => SCollection}
+
+trait SCollectionWrapper[T] extends SCollection[T] with SIterableWrapper[T] {
+  type Wrapped <: Collection[T]
+
+  override def size = underlying.size
 }

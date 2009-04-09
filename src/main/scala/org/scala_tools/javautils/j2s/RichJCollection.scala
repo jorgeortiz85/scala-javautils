@@ -18,6 +18,7 @@ package org.scala_tools.javautils.j2s
 
 import java.util.Collection
 import scala.{Iterable => SIterable, Collection => SCollection}
+import org.scala_tools.javautils.j2s.wrappers.SCollectionWrapper
 import org.scala_tools.javautils.s2j.wrappers.JCollectionWrapper
 
 class RichJCollection[T](collection: Collection[T]) {
@@ -25,7 +26,9 @@ class RichJCollection[T](collection: Collection[T]) {
     case cw: JCollectionWrapper[_] =>
       cw.toScala.asInstanceOf[SCollection[T]]
     // TODO: Should perform in O(1) time
-    case _ =>
-      Implicits.richJIterator(collection.iterator).toScala.toList
+    case _ => new SCollectionWrapper[T] {
+      type Wrapped = Collection[T]
+      protected val underlying = collection
+    }
   }
 }

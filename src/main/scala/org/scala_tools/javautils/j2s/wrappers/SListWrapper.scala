@@ -14,10 +14,13 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.j2s.wrappers
 
-trait JWrapper extends Wrapper {
-  protected val wrapperType = "Java"
-  def toScala: Wrapped = underlying
-  def toJava: this.type = this
+import java.util.List
+
+trait SListWrapper[T] extends Seq[T] with SCollectionWrapper[T] {
+  type Wrapped <: List[T]
+  
+  def length = underlying.size
+  def apply(index: Int): T = underlying.get(index)
 }

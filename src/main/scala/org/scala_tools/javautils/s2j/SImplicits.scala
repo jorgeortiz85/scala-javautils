@@ -14,10 +14,17 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.s2j
 
-trait JWrapper extends Wrapper {
-  protected val wrapperType = "Java"
-  def toScala: Wrapped = underlying
-  def toJava: this.type = this
+import scala.collection.Set
+
+object SImplicits extends SImplicits
+
+trait SImplicits {
+  implicit def richSIterator[T](iterator: Iterator[T]) = new RichSIterator(iterator)
+  implicit def richSIterable[T](iterable: Iterable[T]) = new RichSIterable(iterable)
+  implicit def richSCollection[T](collection: Collection[T]) = new RichSCollection(collection)
+  implicit def richSSeq[T](seq: Seq[T]) = new RichSSeq(seq)
+  implicit def richSSet[T](set: Set[T]) = new RichSSet(set)
+  implicit def richSMap[K, V](map: Map[K, V]) = new RichSMap(map)
 }
