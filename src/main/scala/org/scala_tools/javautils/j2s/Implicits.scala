@@ -24,9 +24,9 @@ import java.util.{Iterator, ArrayList, HashSet, HashMap, Enumeration, Hashtable,
 object Implicits extends Implicits
 
 trait Implicits {
-  implicit def richJEnumeration[T](enumeration: Enumeration[T]) = new RichEnumeration(enumeration)
-  implicit def richJIterator[T](iterator: Iterator[T]) = new RichIterator(iterator)
-  implicit def richJIterable[T](iterable: Iterable[T]) = new RichIterable(iterable)
+  implicit def richJEnumeration[T](enumeration: Enumeration[T]) = new RichJEnumeration(enumeration)
+  implicit def richJIterator[T](iterator: Iterator[T]) = new RichJIterator(iterator)
+  implicit def richJIterable[T](iterable: Iterable[T]) = new RichJIterable(iterable)
 
   // implicit def richJArrayList[T](list: ArrayList[T]) = new RichArrayList(list)
   // implicit def richJHashSet[T](set: HashSet[T]) = new RichHashSet(set)
@@ -39,7 +39,7 @@ trait Implicits {
   // implicit def richJTreeMap[K, V](map: TreeMap[K, V]) = new RichTreeMap(map)
   // implicit def richJTreeSet[T](set: TreeSet[T]) = new RichTreeSet(set)
   // implicit def richJWeakHashMap[K, V](map: WeakHashMap[K, V]) = new RichWeakHashMap(map)
-  implicit def richJList[T](list: List[T]) = new RichList(list)
-  implicit def richJSet[T](set: Set[T]) = new RichSet(set)
-  implicit def richJMap[K, V](map: Map[K, V]) = new RichMap(map)
+  implicit def richJList[T](list: List[T]) = new RichJList(list)
+  implicit def richJSet[T](set: Set[T]) = new RichJSet(set)
+  implicit def richJMap[K, V](map: Map[K, V]) = new RichJMap(map)
 }

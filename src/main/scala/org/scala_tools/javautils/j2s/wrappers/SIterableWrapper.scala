@@ -14,23 +14,12 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s
+package org.scala_tools.javautils.j2s.wrappers
 
-import java.util.Iterator
-import scala.{Iterator => SIterator}
-import org.scala_tools.javautils.s2j.wrappers.IteratorWrapper
+import java.lang.Iterable
+import scala.{Iterable => SIterable}
 
-class RichIterator[T](iterator: Iterator[T]) {
-  def foreach(fn: T => Unit): Unit =
-    while (iterator.hasNext)
-      fn(iterator.next)
-
-  def toScala: SIterator[T] = iterator match {
-    case iw: IteratorWrapper[_] =>
-      iw.toScala.asInstanceOf[SIterator[T]]
-    case _ => new SIterator[T] {
-      def hasNext = iterator.hasNext
-      def next() = iterator.next
-    }
-  }
+trait SIterableWrapper[T] extends SIterable[T] with SWrapper {
+  type Wrapped <: Iterable[T]
+  def elements = Implicits.richJIterator(underlying.iterator).toScala
 }

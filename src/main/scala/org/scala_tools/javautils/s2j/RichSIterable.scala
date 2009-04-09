@@ -16,17 +16,18 @@
  **/
 package org.scala_tools.javautils.s2j
 
-import java.util.{List => JList}
-import scala.collection.jcl.BufferWrapper
+import java.lang.{Iterable => JIterable}
+import java.util.{Collection => JCollection}
+import scala.collection.jcl.{IterableWrapper => JCLIterableWrapper}
 import wrappers._
 
-class RichSeq[T](seq: Seq[T]) {
-  def toJava: JList[T] = seq match {
-    case bw: BufferWrapper[_] =>
-      bw.underlying.asInstanceOf[JList[T]]
-    case _ => new SeqWrapper[T] {
-      type Wrapped = Seq[T]
-      protected val underlying = seq
+class RichSIterable[T](iterable: Iterable[T]) {
+  def toJava: JIterable[T] = iterable match {
+    case iw: JCLIterableWrapper[_] =>
+      iw.underlying.asInstanceOf[JCollection[T]]
+    case _ => new JIterableWrapper[T] {
+      type Wrapped = Iterable[T]
+      protected val underlying = iterable
     }
   }
 }

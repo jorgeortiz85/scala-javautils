@@ -3,6 +3,7 @@ Scala to Java conversions
 Scala               Java
 
 scala.
+  Iterator          Iterator or Enumeration
   Iterable          Iterable    (SIterable has no size(), otherwise it'd be a JCollection)
   Collection        Collection
   Seq               List
@@ -37,6 +38,7 @@ java.lang.
   Iterable          Iterable
 
 java.util.
+  Enumeration       Iterator
   Iterator          Iterator
   Collection        Collection
   List              Seq

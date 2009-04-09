@@ -20,7 +20,7 @@ import java.lang.{Iterable => JIterable}
 import java.util.{Iterator => JIterator, List => JList, Collection => JCollection,
   ListIterator => JListIterator}
 
-trait SeqWrapper[T] extends CollectionWrapper[T] with JList[T] {
+trait JSeqWrapper[T] extends JCollectionWrapper[T] with JList[T] {
   type Wrapped <: Seq[T]
   
   def add(index: Int, element: T): Unit =
@@ -38,7 +38,8 @@ trait SeqWrapper[T] extends CollectionWrapper[T] with JList[T] {
     underlying.indexOf(o)
   def lastIndexOf(o: AnyRef): Int =
     underlying.lastIndexOf(o)
-  def listIterator(): JListIterator[T] = listIterator(0)
+  def listIterator(): JListIterator[T] =
+    listIterator(0)
   def listIterator(index: Int): JListIterator[T] = new JListIterator[T] {
     private var cursor = index
 

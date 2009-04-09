@@ -14,13 +14,13 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j
+package org.scala_tools.javautils.s2j.wrappers
 
-object Implicits extends Implicits
+import java.util.{Iterator => JIterator}
 
-trait Implicits {
-  implicit def richSIterator[T](iterator: Iterator[T]) = new RichSIterator(iterator)
-  implicit def richSIterable[T](iterable: Iterable[T]) = new RichSIterable(iterable)
-  implicit def richSCollection[T](collection: Collection[T]) = new RichSCollection(collection)
-  implicit def richSSeq[T](seq: Seq[T]) = new RichSSeq(seq)
+trait JIteratorWrapper[T] extends JIterator[T] with JWrapper {
+  type Wrapped <: Iterator[T]
+  def hasNext: Boolean = underlying.hasNext
+  def next(): T = underlying.next
+  def remove() = throw new UnsupportedOperationException
 }

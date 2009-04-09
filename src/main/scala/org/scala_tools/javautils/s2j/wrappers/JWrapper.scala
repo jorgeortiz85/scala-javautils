@@ -16,11 +16,8 @@
  **/
 package org.scala_tools.javautils.s2j.wrappers
 
-import java.lang.{Iterable => JIterable}
-import java.util.{Iterator => JIterator}
-
-trait IterableWrapper[T] extends JIterable[T] with Wrapper {
-  type Wrapped <: Iterable[T]
-  def iterator: JIterator[T] =
-    Implicits.richSIterator(underlying.elements).toJava
+trait JWrapper extends Wrapper {
+  val stringPrefix = "JavaWrapper"
+  def toScala: Wrapped = underlying
+  def toJava: this.type = this
 }

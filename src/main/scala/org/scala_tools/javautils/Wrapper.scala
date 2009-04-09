@@ -14,20 +14,17 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j
+package org.scala_tools.javautils
 
-import java.lang.{Iterable => JIterable}
-import java.util.{Collection => JCollection}
-import scala.collection.jcl.{IterableWrapper => JCLIterableWrapper}
-import wrappers._
-
-class RichIterable[T](iterable: Iterable[T]) {
-  def toJava: JIterable[T] = iterable match {
-    case iw: JCLIterableWrapper[_] =>
-      iw.underlying.asInstanceOf[JCollection[T]]
-    case _ => new IterableWrapper[T] {
-      type Wrapped = Iterable[T]
-      protected val underlying = iterable
-    }
+trait Wrapper {
+  type Wrapped
+  protected def underlying: Wrapped
+  protected def stringPrefix: String
+  override def toString =
+    stringPrefix+"("+underlying.toString+")"
+  override def hashCode = underlying.hashCode
+  override def equals(that: Any): Boolean = that match {
+    case that: Wrapper => underlying equals that.underlying
+    case _ => false
   }
 }

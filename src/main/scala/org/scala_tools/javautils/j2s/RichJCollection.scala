@@ -16,17 +16,16 @@
  **/
 package org.scala_tools.javautils.j2s
 
-import java.lang.Iterable
-import scala.{Iterable => SIterable}
-import org.scala_tools.javautils.s2j.wrappers.IterableWrapper
+import java.util.Collection
+import scala.{Iterable => SIterable, Collection => SCollection}
+import org.scala_tools.javautils.s2j.wrappers.JCollectionWrapper
 
-class RichIterable[T](iterable: Iterable[T]) {
-  def foreach(fn: T => Unit): Unit =
-    Implicits.richJIterator(iterable.iterator).foreach(fn)
-
-  def toScala: SIterable[T] = iterable match {
-    case iw: IterableWrapper[_] => iw.toScala.asInstanceOf[SIterable[T]]
+class RichJCollection[T](collection: Collection[T]) {
+  def toScala: SCollection[T] = collection match {
+    case cw: JCollectionWrapper[_] =>
+      cw.toScala.asInstanceOf[SCollection[T]]
     // TODO: Should perform in O(1) time
-    case _ => Implicits.richJIterator(iterable.iterator).toScala.toList
+    case _ =>
+      Implicits.richJIterator(collection.iterator).toScala.toList
   }
 }

@@ -14,13 +14,13 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.j2s.wrappers
 
-import java.util.{Iterator => JIterator}
+import java.util.Enumeration
+import scala.{Iterator => SIterator}
 
-trait IteratorWrapper[T] extends JIterator[T] with Wrapper {
-  type Wrapped <: Iterator[T]
-  def hasNext: Boolean = underlying.hasNext
-  def next(): T = underlying.next
-  def remove() = throw new UnsupportedOperationException
+trait SEnumerationWrapper[T] extends SIterator[T] with SWrapper {
+  type Wrapped <: Enumeration[T]
+  def hasNext: Boolean = underlying.hasMoreElements
+  def next(): T = underlying.nextElement
 }

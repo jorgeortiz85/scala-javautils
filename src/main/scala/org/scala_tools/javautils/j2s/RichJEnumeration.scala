@@ -14,13 +14,19 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j
+package org.scala_tools.javautils.j2s
 
-object Implicits extends Implicits
+import java.util.Enumeration
+import scala.{Iterator => SIterator}
+import org.scala_tools.javautils.j2s.wrappers._
 
-trait Implicits {
-  implicit def richSIterator[T](iterator: Iterator[T]) = new RichSIterator(iterator)
-  implicit def richSIterable[T](iterable: Iterable[T]) = new RichSIterable(iterable)
-  implicit def richSCollection[T](collection: Collection[T]) = new RichSCollection(collection)
-  implicit def richSSeq[T](seq: Seq[T]) = new RichSSeq(seq)
+class RichJEnumeration[T](enumeration: Enumeration[T]) {
+  def foreach(fn: T => Unit): Unit =
+    while (enumeration.hasMoreElements)
+      fn(enumeration.nextElement)
+  
+  def toScala: SIterator[T] = new SEnumerationWrapper[T] {
+    type Wrapped = Enumeration[T]
+    val underlying = enumeration
+  }
 }

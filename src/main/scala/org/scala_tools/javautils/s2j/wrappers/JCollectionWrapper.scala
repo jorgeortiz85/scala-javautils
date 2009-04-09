@@ -19,7 +19,7 @@ package org.scala_tools.javautils.s2j.wrappers
 import java.lang.{Iterable => JIterable}
 import java.util.{Iterator => JIterator, Collection => JCollection}
 
-trait CollectionWrapper[T] extends IterableWrapper[T] with JCollection[T] {
+trait JCollectionWrapper[T] extends JIterableWrapper[T] with JCollection[T] {
   type Wrapped <: Collection[T]
   
   def add(o: T): Boolean =

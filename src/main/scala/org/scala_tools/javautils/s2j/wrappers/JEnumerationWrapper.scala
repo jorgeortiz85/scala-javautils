@@ -14,12 +14,12 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s
+package org.scala_tools.javautils.s2j.wrappers
 
-import java.util.Set
-import scala.collection.jcl.Conversions
-import scala.collection.mutable.{Set => SSet}
+import java.util.{Enumeration => JEnumeration}
 
-class RichSet[T](set: Set[T]) {
-  def toScala: SSet[T] = Conversions.convertSet(set)
+trait JEnumerationWrapper[T] extends JEnumeration[T] with JWrapper {
+  type Wrapped <: Iterator[T]
+  def hasMoreElements: Boolean = underlying.hasNext
+  def nextElement(): T = underlying.next
 }

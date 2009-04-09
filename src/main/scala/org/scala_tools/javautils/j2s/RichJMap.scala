@@ -14,17 +14,22 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.j2s
 
-trait Wrapper {
-  type Wrapped
-  protected def underlying: Wrapped
-  override def toString =
-    "JavaWrapper("+underlying.toString+")"
-  override def hashCode = underlying.hashCode
-  override def equals(that: Any): Boolean = that match {
-    case that: Wrapper => underlying equals that.underlying
-    case _ => false
-  }
-  def toScala: Wrapped = underlying
+import java.util.Map
+import scala.collection.jcl.{Conversions, MapWrapper}
+import scala.collection.mutable.ArrayBuffer
+import scala.Function.untupled
+
+class RichJMap[K, V](map: Map[K, V]) {
+  def toScala: MapWrapper[K, V] = Conversions.convertMap(map)
+
+  def foreach(fn: Tuple2[K, V] => Unit): Unit =
+    foreach(untupled(fn))
+
+  def foreach(fn: (K, V) => Unit): Unit =
+    Implicits.richJIterator(map.entrySet.iterator).foreach { entry =>
+      val (key, value) = (entry.getKey, entry.getValue)
+      fn(key, value)
+    }
 }

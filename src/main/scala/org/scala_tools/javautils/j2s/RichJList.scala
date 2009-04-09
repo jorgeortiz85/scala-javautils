@@ -16,16 +16,9 @@
  **/
 package org.scala_tools.javautils.j2s
 
-import java.util.Enumeration
-import scala.{Iterator => SIterator}
+import java.util.List
+import scala.collection.jcl.{Conversions, BufferWrapper}
 
-class RichEnumeration[T](enumeration: Enumeration[T]) {
-  def foreach(fn: T => Unit): Unit =
-    while (enumeration.hasMoreElements)
-      fn(enumeration.nextElement)
-  
-  def toScala: SIterator[T] = new SIterator[T] {
-    def hasNext = enumeration.hasMoreElements
-    def next() = enumeration.nextElement
-  }
+class RichJList[T](list: List[T]) {
+  def toScala: Seq[T] = Conversions.convertList(list)
 }
