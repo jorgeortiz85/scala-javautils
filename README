@@ -82,6 +82,10 @@ Goals #2, and #3 are now mostly met. No attempt has been made to implement
 efficient wrappers. Also, mutability has not been implemented. My new approach
 for Goal #4 blows up the type checker. Oops.
 
+2009-04-10
+Scala->Java wrappers now (mostly) support mutable collections. Java->Scala
+wrappers still don't.
+
 KNOWN BUGS:
 
-Wrapped collections can't be modified, only read.
+Some wrapped collections can't be modified, only read.
