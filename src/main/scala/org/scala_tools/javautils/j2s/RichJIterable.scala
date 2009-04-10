@@ -25,12 +25,12 @@ class RichJIterable[T](iterable: Iterable[T]) {
   def foreach(fn: T => Unit): Unit =
     Implicits.richJIterator(iterable.iterator).foreach(fn)
 
-  def toScala: SIterable[T] = iterable match {
+  def asScala: SIterable[T] = iterable match {
     case iw: JIterableWrapper[_] =>
-      iw.toScala.asInstanceOf[SIterable[T]]
+      iw.asScala.asInstanceOf[SIterable[T]]
     case _ => new SIterableWrapper[T] {
       type Wrapped = Iterable[T]
-      protected val underlying = iterable
+      val underlying = iterable
     }
   }
 }

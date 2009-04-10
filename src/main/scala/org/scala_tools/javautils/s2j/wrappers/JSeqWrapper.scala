@@ -62,7 +62,7 @@ trait JSeqWrapper[T] extends JList[T] with JCollectionWrapper[T] {
       throw new UnsupportedOperationException
   }
   def subList(fromIndex: Int, toIndex: Int): JList[T] =
-    Implicits.richSSeq(underlying.projection.slice(fromIndex, toIndex)).toJava
+    Implicits.richSSeq(underlying.projection.slice(fromIndex, toIndex)).asJava
 
   def add(index: Int, element: T): Unit =
     throw new UnsupportedOperationException

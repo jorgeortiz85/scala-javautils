@@ -23,12 +23,12 @@ import org.scala_tools.javautils.s2j.wrappers.JMapWrapper
 import org.scala_tools.javautils.j2s.wrappers.SMapWrapper
 
 class RichJMap[K, V](map: Map[K, V]) {
-  def toScala: SMap[K, V] = map match {
+  def asScala: SMap[K, V] = map match {
     case mw: JMapWrapper[_, _] =>
-      mw.toScala.asInstanceOf[SMap[K, V]]
+      mw.asScala.asInstanceOf[SMap[K, V]]
     case _ => new SMapWrapper[K, V] {
       type Wrapped = Map[K, V]
-      protected val underlying = RichJMap.this.map
+      val underlying = RichJMap.this.map
     }
   }
 

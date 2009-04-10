@@ -33,18 +33,18 @@ trait JMapWrapper[K, V] extends JMap[K, V] with JWrapper {
       Set() ++ 
         underlying.elements.map(
           tupled(Entry.apply _ : (K, V) => JMap.Entry[K, V]))
-    ).toJava
+    ).asJava
   def get(key: AnyRef): V =
     // K is erased so this cast is safe
     underlying.apply(key.asInstanceOf[K])
   def isEmpty: Boolean =
     underlying.isEmpty
   def keySet: JSet[K] =
-    Implicits.richSSet(underlying.keySet).toJava
+    Implicits.richSSet(underlying.keySet).asJava
   def size: Int =
     underlying.size
   def values: JCollection[V] =
-    Implicits.richSCollection(underlying.values.collect).toJava
+    Implicits.richSCollection(underlying.values.collect).asJava
 
   def clear(): Unit =
     throw new UnsupportedOperationException

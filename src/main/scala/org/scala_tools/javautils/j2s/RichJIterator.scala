@@ -26,9 +26,9 @@ class RichJIterator[T](iterator: Iterator[T]) {
     while (iterator.hasNext)
       fn(iterator.next)
 
-  def toScala: SIterator[T] = iterator match {
+  def asScala: SIterator[T] = iterator match {
     case iw: JIteratorWrapper[_] =>
-      iw.toScala.asInstanceOf[SIterator[T]]
+      iw.asScala.asInstanceOf[SIterator[T]]
     case _ => new SIteratorWrapper[T] {
       type Wrapped = Iterator[T]
       val underlying = iterator

@@ -18,7 +18,7 @@ package org.scala_tools.javautils
 
 trait Wrapper {
   type Wrapped
-  protected def underlying: Wrapped
+  def underlying: Wrapped
   protected def wrapperType: String
   override def toString =
     wrapperType+"Wrapper("+underlying.toString+")"

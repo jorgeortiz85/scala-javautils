@@ -23,14 +23,14 @@ import org.scala_tools.javautils.s2j.wrappers.JIterableWrapper
 import org.scala_tools.javautils.j2s.wrappers.SIterableWrapper
 
 class RichSIterable[T](iterable: Iterable[T]) {
-  def toJava: JIterable[T] = iterable match {
+  def asJava: JIterable[T] = iterable match {
     case iw: JCLIterableWrapper[_] =>
       iw.underlying.asInstanceOf[JCollection[T]]
     case iw: SIterableWrapper[_] =>
-      iw.toJava.asInstanceOf[JIterable[T]]
+      iw.asJava.asInstanceOf[JIterable[T]]
     case _ => new JIterableWrapper[T] {
       type Wrapped = Iterable[T]
-      protected val underlying = iterable
+      val underlying = iterable
     }
   }
 }

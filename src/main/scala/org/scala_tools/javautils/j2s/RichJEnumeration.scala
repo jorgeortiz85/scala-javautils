@@ -26,12 +26,12 @@ class RichJEnumeration[T](enumeration: Enumeration[T]) {
     while (enumeration.hasMoreElements)
       fn(enumeration.nextElement)
   
-  def toScala: SIterator[T] = enumeration match {
+  def asScala: SIterator[T] = enumeration match {
     case ew: JEnumerationWrapper[_] =>
-      ew.toScala.asInstanceOf[SIterator[T]]
+      ew.asScala.asInstanceOf[SIterator[T]]
     case _ => new SEnumerationWrapper[T] {
       type Wrapped = Enumeration[T]
-      protected val underlying = enumeration
+      val underlying = enumeration
     }
   }
 }

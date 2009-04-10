@@ -21,5 +21,5 @@ import scala.{Iterable => SIterable}
 
 trait SIterableWrapper[T] extends SIterable[T] with SWrapper {
   type Wrapped <: Iterable[T]
-  def elements = Implicits.richJIterator(underlying.iterator).toScala
+  def elements = Implicits.richJIterator(underlying.iterator).asScala
 }

@@ -21,8 +21,8 @@ collection in Scala (scala.collection.jcl). It is deficient in several ways:
 GOALS:
 
 0) Implicit conversions should be as conservative as possible. They should add
-   no methods beyond "foreach", "filter", "map", "flatMap", "toScala", and
-   "toJava". They should add no types, interfaces, or traits that are ever
+   no methods beyond "foreach", "filter", "map", "flatMap", "asScala", and
+   "asJava". They should add no types, interfaces, or traits that are ever
    used outside this package.
 
 With a single "import org.scala_tools.javautils.Implicits._", a user should
@@ -45,10 +45,10 @@ be able to:
    This rule should also hold for Iterable-like interfaces, namely Iterator,
    Enumeration, and Map.
 
-2) Convert any Java collection into a Scala collection by calling "toScala".
+2) Convert any Java collection into a Scala collection by calling "asScala".
    This operation should run in constant O(1) time.
 
-3) Convert any Scala collection into a Java collection by calling "toJava"
+3) Convert any Scala collection into a Java collection by calling "asJava"
    This operation should run in constant O(1) time.
 
 Whenever possible, a user should be able to:
@@ -65,9 +65,9 @@ PROGRESS:
 Goal #1 has been reached. RichIterable, RichIterator, and RichEnumeration
 provide foreach to Java's Iterable, Iterator, and Enumeration.
 Goal #2 has been mostly reached. All Java classes and interfaces that are
-supported by scala.collection.jcl are provided with a "toScala" method.
+supported by scala.collection.jcl are provided with a "asScala" method.
 Some of the Java interfaces that are not supported by scala.collection.jcl
-have a "toScala" method that does not run in O(1) time. I'm debating whether
+have a "asScala" method that does not run in O(1) time. I'm debating whether
 it's worthwhile to use the jcl wrappers, or to make my own.
 Goal #3 is nowhere near completion. It will likely require a lot of wrappers,
 and jcl is not much help here.

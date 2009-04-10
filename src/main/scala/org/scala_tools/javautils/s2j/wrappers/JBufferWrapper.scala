@@ -25,13 +25,13 @@ trait JBufferWrapper[T] extends JList[T] with JSeqWrapper[T] {
   type Wrapped <: Buffer[T]
 
   override def add(o: T): Boolean =
-    modified(underlying -= o)
+    modified(underlying += o)
   override def add(index: Int, element: T): Unit =
     underlying.insert(index, element)
   override def addAll(c: JCollection[_ <: T]): Boolean =
     modified(Implicits.richJIterable(c).foreach(underlying += _))
   override def addAll(index: Int, c: JCollection[_ <: T]): Boolean =
-    modified(underlying.insertAll(index, Implicits.richJIterable(c).toScala))
+    modified(underlying.insertAll(index, Implicits.richJIterable(c).asScala))
   override def clear(): Unit =
     underlying.clear()
   override def remove(o: AnyRef): Boolean =
@@ -79,5 +79,5 @@ trait JBufferWrapper[T] extends JList[T] with JSeqWrapper[T] {
   //     throw new UnsupportedOperationException
   // }
   // override def subList(fromIndex: Int, toIndex: Int): JList[T] =
-  //   Implicits.richSSeq(underlying.projection.slice(fromIndex, toIndex)).toJava
+  //   Implicits.richSSeq(underlying.projection.slice(fromIndex, toIndex)).asJava
 }

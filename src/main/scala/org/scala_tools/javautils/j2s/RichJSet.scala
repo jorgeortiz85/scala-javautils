@@ -22,12 +22,12 @@ import org.scala_tools.javautils.s2j.wrappers.JSetWrapper
 import org.scala_tools.javautils.j2s.wrappers.SSetWrapper
 
 class RichJSet[T](set: Set[T]) {
-  def toScala: SSet[T] = set match {
+  def asScala: SSet[T] = set match {
     case sw: JSetWrapper[_] =>
-      sw.toScala.asInstanceOf[SSet[T]]
+      sw.asScala.asInstanceOf[SSet[T]]
     case _ => new SSetWrapper[T] {
       type Wrapped = Set[T]
-      protected val underlying = set
+      val underlying = set
     }
   }
 }

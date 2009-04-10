@@ -23,14 +23,14 @@ import org.scala_tools.javautils.s2j.wrappers.JMutableSetWrapper
 import org.scala_tools.javautils.j2s.wrappers.SSetWrapper
 
 class RichSMutableSet[T](set: Set[T]) {
-  def toJava: JSet[T] = set match {
+  def asJava: JSet[T] = set match {
     case sw: JCLSetWrapper[_] =>
       sw.underlying.asInstanceOf[JSet[T]]
     case sw: SSetWrapper[_] =>
-      sw.toJava.asInstanceOf[JSet[T]]
+      sw.asJava.asInstanceOf[JSet[T]]
     case _ => new JMutableSetWrapper[T] {
       type Wrapped = Set[T]
-      protected val underlying = set
+      val underlying = set
     }
   }
 }

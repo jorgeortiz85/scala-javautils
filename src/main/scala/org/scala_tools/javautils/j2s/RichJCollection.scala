@@ -30,12 +30,12 @@ class RichJCollection[T, C[U] <: Collection[U]](collection: C[T]) {
   //   rv
   // }
   
-  def toScala: SCollection[T] = collection match {
+  def asScala: SCollection[T] = collection match {
     case cw: JCollectionWrapper[_] =>
-      cw.toScala.asInstanceOf[SCollection[T]]
+      cw.asScala.asInstanceOf[SCollection[T]]
     case _ => new SCollectionWrapper[T] {
       type Wrapped = Collection[T]
-      protected val underlying = collection
+      val underlying = collection
     }
   }
 }

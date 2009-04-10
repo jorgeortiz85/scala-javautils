@@ -23,14 +23,14 @@ import org.scala_tools.javautils.s2j.wrappers.JMutableMapWrapper
 import org.scala_tools.javautils.j2s.wrappers.SMapWrapper
 
 class RichSMutableMap[K, V](map: Map[K, V]) {
-  def toJava: JMap[K, V] = map match {
+  def asJava: JMap[K, V] = map match {
     case mw: JCLMapWrapper[_, _] =>
       mw.underlying.asInstanceOf[JMap[K, V]]
     case mw: SMapWrapper[_, _] =>
-      mw.toJava.asInstanceOf[JMap[K, V]]
+      mw.asJava.asInstanceOf[JMap[K, V]]
     case _ => new JMutableMapWrapper[K, V] {
       type Wrapped = Map[K, V]
-      protected val underlying = map
+      val underlying = map
     }
   }
 }

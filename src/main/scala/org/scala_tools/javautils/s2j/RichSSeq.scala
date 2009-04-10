@@ -22,14 +22,14 @@ import org.scala_tools.javautils.s2j.wrappers.JSeqWrapper
 import org.scala_tools.javautils.j2s.wrappers.SListWrapper
 
 class RichSSeq[T](seq: Seq[T]) {
-  def toJava: JList[T] = seq match {
+  def asJava: JList[T] = seq match {
     case bw: JCLBufferWrapper[_] =>
       bw.underlying.asInstanceOf[JList[T]]
     case lw: SListWrapper[_] =>
-      lw.toJava.asInstanceOf[JList[T]]
+      lw.asJava.asInstanceOf[JList[T]]
     case _ => new JSeqWrapper[T] {
       type Wrapped = Seq[T]
-      protected val underlying = seq
+      val underlying = seq
     }
   }
 }

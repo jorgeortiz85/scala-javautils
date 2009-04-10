@@ -22,5 +22,5 @@ import java.util.{Iterator => JIterator}
 trait JIterableWrapper[T] extends JIterable[T] with JWrapper {
   type Wrapped <: Iterable[T]
   def iterator: JIterator[T] =
-    Implicits.richSIterator(underlying.elements).toJava
+    Implicits.richSIterator(underlying.elements).asJava
 }

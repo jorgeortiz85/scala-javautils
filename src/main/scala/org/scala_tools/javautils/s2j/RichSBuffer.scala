@@ -23,14 +23,14 @@ import org.scala_tools.javautils.s2j.wrappers.JBufferWrapper
 import org.scala_tools.javautils.j2s.wrappers.SListWrapper
 
 class RichSBuffer[T](buffer: Buffer[T]) {
-  def toJava: JList[T] = buffer match {
+  def asJava: JList[T] = buffer match {
     case bw: JCLBufferWrapper[_] =>
       bw.underlying.asInstanceOf[JList[T]]
     case lw: SListWrapper[_] =>
-      lw.toJava.asInstanceOf[JList[T]]
+      lw.asJava.asInstanceOf[JList[T]]
     case _ => new JBufferWrapper[T] {
       type Wrapped = Buffer[T]
-      protected val underlying = buffer
+      val underlying = buffer
     }
   }
 }

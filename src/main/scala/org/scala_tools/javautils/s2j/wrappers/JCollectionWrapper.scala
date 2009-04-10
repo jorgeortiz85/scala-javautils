@@ -33,7 +33,7 @@ trait JCollectionWrapper[T] extends JCollection[T] with JIterableWrapper[T] {
   def contains(o: AnyRef): Boolean =
     underlying.exists(_ == o)
   def containsAll(c: JCollection[_]): Boolean =
-    Implicits.richJIterable(c).toScala.forall(this contains _.asInstanceOf[AnyRef])
+    Implicits.richJIterable(c).asScala.forall(this contains _.asInstanceOf[AnyRef])
   def isEmpty(): Boolean =
     underlying.isEmpty
   def size(): Int =

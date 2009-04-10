@@ -22,22 +22,22 @@ import org.scala_tools.javautils.j2s.wrappers._
 import org.scala_tools.javautils.s2j.wrappers._
 
 class RichSIterator[T](iterator: Iterator[T]) {
-  def toJava: JIterator[T] = iterator match {
+  def asJava: JIterator[T] = iterator match {
     case iw: JCLIteratorWrapper[_] =>
       iw.underlying.asInstanceOf[JIterator[T]]
     case iw: SIteratorWrapper[_] =>
-      iw.toJava.asInstanceOf[JIterator[T]]
+      iw.asJava.asInstanceOf[JIterator[T]]
     case _ => new JIteratorWrapper[T] {
       type Wrapped = Iterator[T]
-      protected val underlying = iterator
+      val underlying = iterator
     }
   }
-  def toJavaEnumeration: JEnumeration[T] = iterator match {
+  def asJavaEnumeration: JEnumeration[T] = iterator match {
     case ew: SEnumerationWrapper[_] =>
-      ew.toJava.asInstanceOf[JEnumeration[T]]
+      ew.asJava.asInstanceOf[JEnumeration[T]]
     case _ => new JEnumerationWrapper[T] {
       type Wrapped = Iterator[T]
-      protected val underlying = iterator
+      val underlying = iterator
     }
   }
 }
