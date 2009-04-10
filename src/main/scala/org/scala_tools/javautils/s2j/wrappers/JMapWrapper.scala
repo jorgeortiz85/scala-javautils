@@ -22,15 +22,6 @@ import scala.Function.tupled
 
 trait JMapWrapper[K, V] extends JMap[K, V] with JWrapper {
   type Wrapped <: Map[K, V]
-  
-  def clear(): Unit =
-    throw new UnsupportedOperationException
-  def put(key: K, value: V): V =
-    throw new UnsupportedOperationException
-  def putAll(t: JMap[_ <: K, _ <: V]): Unit =
-    Implicits.richJMap(t).toScala.foreach(tupled((k, v) => this.put(k, v)))
-  def remove(key: AnyRef): V =
-    throw new UnsupportedOperationException
 
   def containsKey(key: AnyRef): Boolean =
     // K is erased so this cast is safe
@@ -54,11 +45,19 @@ trait JMapWrapper[K, V] extends JMap[K, V] with JWrapper {
     underlying.size
   def values: JCollection[V] =
     Implicits.richSCollection(underlying.values.collect).toJava
+
+  def clear(): Unit =
+    throw new UnsupportedOperationException
+  def put(key: K, value: V): V =
+    throw new UnsupportedOperationException
+  def putAll(t: JMap[_ <: K, _ <: V]): Unit =
+    throw new UnsupportedOperationException
+  def remove(key: AnyRef): V =
+    throw new UnsupportedOperationException
   
   private case class Entry(key: K, value: V) extends JMap.Entry[K, V] {
     def getKey(): K = key
     def getValue(): V = value
-    def setValue(value: V) =
-      throw new UnsupportedOperationException
+    def setValue(value: V) = throw new UnsupportedOperationException
   }
 }

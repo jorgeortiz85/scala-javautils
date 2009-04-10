@@ -42,8 +42,8 @@ be able to:
        ...
      }
    
-   This rule should also hold for Iterable-like interfaces, namely Iterator
-   and Enumeration.
+   This rule should also hold for Iterable-like interfaces, namely Iterator,
+   Enumeration, and Map.
 
 2) Convert any Java collection into a Scala collection by calling "toScala".
    This operation should run in constant O(1) time.

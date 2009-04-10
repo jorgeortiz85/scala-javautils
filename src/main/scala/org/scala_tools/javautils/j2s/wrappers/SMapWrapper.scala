@@ -27,7 +27,8 @@ trait SMapWrapper[K, V] extends SMap[K, V] with SWrapper {
       Some(underlying.get(key))
     else
       None
-  def size = underlying.size
+  def size =
+    underlying.size
   def elements =
     Implicits.richJIterator(underlying.entrySet.iterator).toScala.map { entry =>
       (entry.getKey, entry.getValue)

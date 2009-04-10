@@ -20,17 +20,8 @@ import java.lang.{Iterable => JIterable}
 import java.util.{Iterator => JIterator, List => JList, Collection => JCollection,
   ListIterator => JListIterator}
 
-trait JSeqWrapper[T] extends JCollectionWrapper[T] with JList[T] {
+trait JSeqWrapper[T] extends JList[T] with JCollectionWrapper[T] {
   type Wrapped <: Seq[T]
-  
-  def add(index: Int, element: T): Unit =
-    throw new UnsupportedOperationException
-  def addAll(index: Int, c: JCollection[_ <: T]): Boolean =
-    throw new UnsupportedOperationException
-  def remove(index: Int): T =
-    throw new UnsupportedOperationException
-  def set(index: Int, element: T): T =
-    throw new UnsupportedOperationException
   
   def get(index: Int): T =
     underlying.apply(index)
@@ -43,14 +34,14 @@ trait JSeqWrapper[T] extends JCollectionWrapper[T] with JList[T] {
   def listIterator(index: Int): JListIterator[T] = new JListIterator[T] {
     private var cursor = index
 
-    def add(o: T): Unit = throw new UnsupportedOperationException
-    def remove(): Unit = throw new UnsupportedOperationException
-    def set(o: T): Unit = throw new UnsupportedOperationException
-
-    def hasNext(): Boolean = cursor < underlying.size
-    def hasPrevious(): Boolean = cursor > 0
-    def nextIndex(): Int = cursor
-    def previousIndex(): Int = cursor - 1
+    def hasNext(): Boolean =
+      cursor < underlying.size
+    def hasPrevious(): Boolean =
+      cursor > 0
+    def nextIndex(): Int =
+      cursor
+    def previousIndex(): Int =
+      cursor - 1
     def next(): T = {
       val next = nextIndex()
       if (hasNext()) cursor += 1
@@ -61,8 +52,24 @@ trait JSeqWrapper[T] extends JCollectionWrapper[T] with JList[T] {
       if (hasPrevious()) cursor -= 1
       underlying.apply(prev)
     }
-  }
 
+
+    def add(o: T): Unit =
+      throw new UnsupportedOperationException
+    def remove(): Unit =
+      throw new UnsupportedOperationException
+    def set(o: T): Unit =
+      throw new UnsupportedOperationException
+  }
   def subList(fromIndex: Int, toIndex: Int): JList[T] =
     Implicits.richSSeq(underlying.projection.slice(fromIndex, toIndex)).toJava
+
+  def add(index: Int, element: T): Unit =
+    throw new UnsupportedOperationException
+  def addAll(index: Int, c: JCollection[_ <: T]): Boolean =
+    throw new UnsupportedOperationException
+  def remove(index: Int): T =
+    throw new UnsupportedOperationException
+  def set(index: Int, element: T): T =
+    throw new UnsupportedOperationException
 }

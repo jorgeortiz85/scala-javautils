@@ -19,26 +19,21 @@ package org.scala_tools.javautils.s2j.wrappers
 import java.lang.{Iterable => JIterable}
 import java.util.{Iterator => JIterator, Collection => JCollection}
 
-trait JCollectionWrapper[T] extends JIterableWrapper[T] with JCollection[T] {
+trait JCollectionWrapper[T] extends JCollection[T] with JIterableWrapper[T] {
   type Wrapped <: Collection[T]
-  
-  def add(o: T): Boolean =
-    throw new UnsupportedOperationException
-  def addAll(c: JCollection[_ <: T]): Boolean =
-    Implicits.richJIterable(c).toScala.forall(this add _)
-  def clear(): Unit =
-    throw new UnsupportedOperationException
-  def remove(o: AnyRef): Boolean =
-    throw new UnsupportedOperationException
-  def removeAll(c: JCollection[_]): Boolean =
-    Implicits.richJIterable(c).toScala.forall(o => this remove o.asInstanceOf[AnyRef])
-  def retainAll(c: JCollection[_]): Boolean =
-    throw new UnsupportedOperationException
+
+  // This helper method takes an action and returns a Boolean indicating
+  // whether the underlying Set was modified as a result of the action.
+  protected def modified(action: => Unit): Boolean = {
+    val oldSize = underlying.size
+    action
+    oldSize != underlying.size
+  }
 
   def contains(o: AnyRef): Boolean =
     underlying.exists(_ == o)
   def containsAll(c: JCollection[_]): Boolean =
-    Implicits.richJIterable(c).toScala.forall(o => this contains o.asInstanceOf[AnyRef])
+    Implicits.richJIterable(c).toScala.forall(this contains _.asInstanceOf[AnyRef])
   def isEmpty(): Boolean =
     underlying.isEmpty
   def size(): Int =
@@ -47,4 +42,17 @@ trait JCollectionWrapper[T] extends JIterableWrapper[T] with JCollection[T] {
     underlying.toArray.map((x: T) => x.asInstanceOf[S])
   def toArray: Array[AnyRef] =
     underlying.toArray.map((x: T) => x.asInstanceOf[AnyRef])
+
+  def add(o: T): Boolean =
+    throw new UnsupportedOperationException
+  def addAll(c: JCollection[_ <: T]): Boolean =
+    throw new UnsupportedOperationException
+  def clear(): Unit =
+    throw new UnsupportedOperationException
+  def remove(o: AnyRef): Boolean =
+    throw new UnsupportedOperationException
+  def removeAll(c: JCollection[_]): Boolean =
+    throw new UnsupportedOperationException
+  def retainAll(c: JCollection[_]): Boolean =
+    throw new UnsupportedOperationException
 }

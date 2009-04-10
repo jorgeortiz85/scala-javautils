@@ -16,7 +16,8 @@
  **/
 package org.scala_tools.javautils.s2j
 
-import scala.collection.Set
+import scala.collection.{Set, Map}
+import scala.collection.mutable.{Set => MSet, Map => MMap, Buffer}
 
 object SImplicits extends SImplicits
 
@@ -25,6 +26,9 @@ trait SImplicits {
   implicit def richSIterable[T](iterable: Iterable[T]) = new RichSIterable(iterable)
   implicit def richSCollection[T](collection: Collection[T]) = new RichSCollection(collection)
   implicit def richSSeq[T](seq: Seq[T]) = new RichSSeq(seq)
+  implicit def richSBuffer[T](buffer: Buffer[T]) = new RichSBuffer(buffer)
   implicit def richSSet[T](set: Set[T]) = new RichSSet(set)
+  implicit def richSMutableSet[T](set: MSet[T]) = new RichSMutableSet(set)
   implicit def richSMap[K, V](map: Map[K, V]) = new RichSMap(map)
+  implicit def richSMutableMap[K, V](map: MMap[K, V]) = new RichSMutableMap(map)
 }
