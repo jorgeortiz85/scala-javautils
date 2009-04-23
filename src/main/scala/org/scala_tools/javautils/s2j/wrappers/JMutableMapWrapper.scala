@@ -35,4 +35,6 @@ trait JMutableMapWrapper[K, V] extends JMap[K, V] with JMapWrapper[K, V] {
   override def remove(key: AnyRef): V =
     // TODO: Are these casts safe??
     underlying.removeKey(key.asInstanceOf[K]).getOrElse(null).asInstanceOf[V]
+  
+  // TODO: Implement mutable Entries.
 }

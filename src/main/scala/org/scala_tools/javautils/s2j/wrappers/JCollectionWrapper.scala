@@ -23,7 +23,7 @@ trait JCollectionWrapper[T] extends JCollection[T] with JIterableWrapper[T] {
   type Wrapped <: Collection[T]
 
   // This helper method takes an action and returns a Boolean indicating
-  // whether the underlying Set was modified as a result of the action.
+  // whether the underlying Collection was modified as a result of the action.
   protected def modified(action: => Unit): Boolean = {
     val oldSize = underlying.size
     action

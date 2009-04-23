@@ -48,6 +48,7 @@ trait JBufferWrapper[T] extends JList[T] with JSeqWrapper[T] {
     rv
   }
 
+  // TODO: Mutable List Iterator
   // override def listIterator(index: Int): JListIterator[T] = new JListIterator[T] {
   //   private var cursor = index
   // 

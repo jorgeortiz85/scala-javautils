@@ -1,48 +1,53 @@
-Scala to Java conversions
+IF YOU HAVE							AND YOU CALL				YOU WILL GET						WITH THE FOLLOWING KNOWN GOTCHAS
 
-Scala               Java
+s.Iterator							asJava							j.u.Iterator						Optional operations will throw exceptions (remove).
+												asJavaEnumeration		j.u.Enumeration					None.
 
-scala.
-  Iterator          Iterator or Enumeration
-  Iterable          Iterable    (SIterable has no size(), otherwise it'd be a JCollection)
-  Collection        Collection
-  Seq               List
-  RandomAccessSeq   List
-  Array             List        (should need no conversion, but scala.Array is also a scala.Seq)
-  List              List
-  Stream            List
-  Option[?]         ???
-  
-  scala.collection.
-    Map             Map
-    Set             Set
-    
-    scala.collection.immutable.
-      Map           Map
-      Set           Set
-      
-    scala.collection.mutable.
-      Buffer        Queue / Deque[6?]
-      Map           Map
-      Set           Set
-      ArrayBuffer
-      ListBuffer
-      HashMap
-      HashSet
+s.Iterable							asJava							j.l.Iterable						On iterator, optional operations will throw
+																																		exceptions (remove).
 
-Java to Scala conversions
+s.Collection						asJava							j.u.Collection					Optional operations will throw exceptions (add,
+																																		addAll, clear, remove, removeAll, retainAll).
+																																		On iterator, optional operations will throw 
+																																		exceptions (remove).
 
-Java                Scala
+s.Seq										asJava							j.u.List								Optional operations will throw exceptions (add, 
+																																		addAll, clear, remove, removeAll, retainAll, set). 
+																																		On iterators, optional operations will throw  
+																																		exceptions (remove, set).
 
-java.lang.
-  Iterable          Iterable
+s.c.Map									asJava							j.u.Map									Optional operations will throw exceptions (clear,
+																																		put, putAll, remove).
+																																		On entries, optional operations will throw
+																																		exceptions (setValue).
 
-java.util.
-  Enumeration       Iterator
-  Iterator          Iterator
-  Collection        Collection
-  List              Seq
-  Queue             ???
-  Deque [6]         Buffer
-  Map               collection.Map
-  Set               collection.Set
+s.c.Set									asJava							j.u.Set									Optional operations will throw exceptions (add,
+																																		addAll, clear, remove, removeAll, retainAll).
+																																		On iterator, optional operations will throw
+																																		exceptions (remove).
+
+s.c.m.Map								asJava							j.u.Map									See source of JMutableMapWrapper for potentially
+																																		unsafe casts.
+																																		On entries, optional operations will throw
+																																		exception (setValue). TODO: Unimplemented.
+
+s.c.m.Set								asJava							j.u.Set									None.
+
+s.c.m.Buffer						asJava							j.u.List								None.
+												asJavaQueue					j.u.{List with Queue}		TODO: Unimplemented.
+												asJavaDeque					j.u.{List with Deque}		On iterators, optional operations will throw
+																																		exceptions (remove, set). TODO: Unimplemented
+
+IF YOU HAVE							AND YOU CALL				YOU WILL GET						WITH THE FOLLOWING KNOWN GOTCHAS
+
+j.u.Enumeration					asScala							s.Iterator							None.
+j.u.Iterator						asScala							s.Iterator							None.
+j.u.Iterable						asScala							s.Iterable							None.
+j.u.Collection					asScala							s.Collection						None.
+j.u.Map									asScala							s.c.Map									None.
+												asScalaMutable			s.c.m.Map								TODO: Unimplemented
+j.u.Set									asScala							s.c.Set									None.
+												asScalaMutable			s.c.m.Set								TODO: Unimplemented
+j.u.List								asScala							s.Seq										None.
+												asScalaMutable			???											TODO: Unimplemented
+j.u.{List with Deque}		asScala							s.c.m.Buffer						None.
