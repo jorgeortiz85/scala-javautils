@@ -86,14 +86,20 @@ for Goal #4 blows up the type checker. Oops.
 Scala->Java wrappers now (mostly) support mutable collections. Java->Scala
 wrappers still don't.
 
+2009-04-23
+Goals #1-3 are fairly complete, for now. The NOTES file describes how
+what conversions exist and can be expected.
+
 KNOWN ISSUES:
 
-Some wrapped collections can't be modified, only read.
+There are no tests.
+
+Iterators on mutable collections aren't themselves mutable.
 
 None of the wrappers make any attempt at thread-safety, even when the underlying
 collection is thread-safe.
 
 Classes inheriting from Wrapper probably lose symmetry for "equals".
 
-Wrappers often throw the wrong exception (i.e., exception thrown by the wrapped
+Wrappers may throw the wrong exception (i.e., exception thrown by the wrapped
 collection are not anticipated by the wrapper interface).
