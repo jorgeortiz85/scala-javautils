@@ -26,7 +26,7 @@ trait SImplicits {
   implicit def richSIterable[T](iterable: Iterable[T]) = new RichSIterable(iterable)
   implicit def richSCollection[T](collection: Collection[T]) = new RichSCollection(collection)
   implicit def richSSeq[T](seq: Seq[T]) = new RichSSeq(seq)
-  implicit def richSRandomAccessSeqMutable[T](seq: RichSRandomAccessSeqMutable[T]) = new RichSRandomAccessSeqMutable(seq)
+  implicit def richSRandomAccessSeqMutable[T](seq: RandomAccessSeq.Mutable[T]) = new RichSRandomAccessSeqMutable(seq)
   implicit def richSBuffer[T](buffer: Buffer[T]) = new RichSBuffer(buffer)
   implicit def richSSet[T](set: Set[T]) = new RichSSet(set)
   implicit def richSMutableSet[T](set: MSet[T]) = new RichSMutableSet(set)

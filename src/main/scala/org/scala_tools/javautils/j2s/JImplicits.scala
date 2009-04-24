@@ -23,25 +23,13 @@ import java.util.{Iterator, ArrayList, HashSet, HashMap, Enumeration, Hashtable,
 
 object JImplicits extends JImplicits
 
-trait JImplicits extends Builders {
+trait JImplicits {
   implicit def richJEnumeration[T](enumeration: Enumeration[T]) = new RichJEnumeration(enumeration)
   implicit def richJIterator[T](iterator: Iterator[T]) = new RichJIterator(iterator)
   implicit def richJIterable[T](iterable: Iterable[T]) = new RichJIterable(iterable)
-  implicit def richJCollection[T, C[U] <: Collection[U]](collection: C[T]) = new RichJCollection[T, C](collection)
+  implicit def richJCollection[T](collection: Collection[T]) = new RichJCollection[T](collection)
   implicit def richJList[T](list: List[T]) = new RichJList(list)
   implicit def richJSet[T](set: Set[T]) = new RichJSet(set)
   implicit def richJMap[K, V](map: Map[K, V]) = new RichJMap(map)
   implicit def richJListWithDeque[T](lwd: List[T] with Deque[T]) = new RichJListWithDeque(lwd)
-
-  // implicit def richJArrayList[T](list: ArrayList[T]) = new RichArrayList(list)
-  // implicit def richJHashSet[T](set: HashSet[T]) = new RichHashSet(set)
-  // implicit def richJHashMap[K, V](map: HashMap[K, V]) = new RichHashMap(map)  
-  // implicit def richJHashtable[K, V](map: Hashtable[K, V]) = new RichHashtable(map)  
-  // implicit def richJIdentityHashMap[K, V](map: IdentityHashMap[K, V]) = new RichIdentityHashMap(map)  
-  // implicit def richJLinkedHashMap[K, V](map: LinkedHashMap[K, V]) = new RichLinkedHashMap(map)  
-  // implicit def richJLinkedHashSet[T](set: LinkedHashSet[T]) = new RichLinkedHashSet(set)
-  // implicit def richJLinkedList[T](list: LinkedList[T]) = new RichLinkedList(list)
-  // implicit def richJTreeMap[K, V](map: TreeMap[K, V]) = new RichTreeMap(map)
-  // implicit def richJTreeSet[T](set: TreeSet[T]) = new RichTreeSet(set)
-  // implicit def richJWeakHashMap[K, V](map: WeakHashMap[K, V]) = new RichWeakHashMap(map)
 }
