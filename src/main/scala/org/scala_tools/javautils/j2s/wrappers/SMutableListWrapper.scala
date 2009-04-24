@@ -14,20 +14,15 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s
+package org.scala_tools.javautils.j2s.wrappers
 
-import java.util.{List => JList, Deque => JDeque}
-import scala.collection.mutable.Buffer
-import org.scala_tools.javautils.j2s.wrappers.SListWithDequeWrapper
-import org.scala_tools.javautils.s2j.wrappers.JBufferDequeWrapper
+import java.util.List
 
-class RichJListWithDeque[T](lwd: JList[T] with JDeque[T]) {
-  def asScalaMutable: Buffer[T] = lwd match {
-    case bdw: JBufferDequeWrapper[_] =>
-      bdw.asScala.asInstanceOf[Buffer[T]]
-    case _ => new SListWithDequeWrapper[T] {
-      type Wrapped = JList[T] with JDeque[T]
-      val underlying = lwd
-    }
-  }
+trait SMutableListWrapper[T] extends RandomAccessSeq.Mutable[T] with SListWrapper[T] {
+  type Wrapped <: List[T]
+  
+  def update(n: Int, elem: T): Unit =
+    underlying.set(n, elem)
+  override def elements: Iterator[T] =
+    super[Mutable].elements
 }

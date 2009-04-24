@@ -36,7 +36,14 @@ class RichSBuffer[T](buffer: Buffer[T]) {
     }
   }
 
-  // def asJavaQueue: JList[T] with JQueue[T] = buffer match {}
+  def asJavaQueue: JList[T] with JQueue[T] = buffer match {
+    case dw: SListWithDequeWrapper[_] =>
+      dw.asJava.asInstanceOf[JList[T] with JQueue[T]]
+    case _ => new JBufferDequeWrapper[T] {
+      type Wrapped = Buffer[T]
+      val underlying = buffer
+    }
+  }
 
   def asJavaDeque: JList[T] with JDeque[T] = buffer match {
     case dw: SListWithDequeWrapper[_] =>

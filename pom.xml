@@ -3,7 +3,7 @@
   <groupId>org.scala-tools</groupId>
   <artifactId>javautils</artifactId>
   <version>0.1-SNAPSHOT</version>
-  <inceptionYear>2008</inceptionYear>
+  <inceptionYear>2009</inceptionYear>
   <properties>
     <scala.version>2.7.3</scala.version>
   </properties>

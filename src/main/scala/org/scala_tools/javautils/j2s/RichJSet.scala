@@ -18,14 +18,24 @@ package org.scala_tools.javautils.j2s
 
 import java.util.Set
 import scala.collection.{Set => SSet}
-import org.scala_tools.javautils.s2j.wrappers.JSetWrapper
-import org.scala_tools.javautils.j2s.wrappers.SSetWrapper
+import scala.collection.mutable.{Set => SMutableSet}
+import org.scala_tools.javautils.s2j.wrappers.{JSetWrapper, JMutableSetWrapper}
+import org.scala_tools.javautils.j2s.wrappers.{SSetWrapper, SMutableSetWrapper}
 
 class RichJSet[T](set: Set[T]) {
   def asScala: SSet[T] = set match {
     case sw: JSetWrapper[_] =>
       sw.asScala.asInstanceOf[SSet[T]]
     case _ => new SSetWrapper[T] {
+      type Wrapped = Set[T]
+      val underlying = set
+    }
+  }
+
+  def asScalaMutable: SMutableSet[T] = set match {
+    case msw: JMutableSetWrapper[_] =>
+      msw.asScala.asInstanceOf[SMutableSet[T]]
+    case _ => new SMutableSetWrapper[T] {
       type Wrapped = Set[T]
       val underlying = set
     }

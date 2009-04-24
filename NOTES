@@ -16,6 +16,12 @@ s.Seq										asJava							j.u.List								Optional operations will throw excep
 																																		On iterators, optional operations will throw  
 																																		exceptions (remove, set).
 
+s.RAS.Mutable						asJava							j.u.List								Of the optional operations, only one (set) is
+																																		supported, all others (add, addAll, clear, remove,
+																																		removeAll, retainAll) will throw exceptions.
+																																		On iterators, optional operations will throw  
+																																		exceptions (remove, set).
+
 s.c.Map									asJava							j.u.Map									Optional operations will throw exceptions (clear,
 																																		put, putAll, remove).
 																																		On entries, optional operations will throw
@@ -31,11 +37,18 @@ s.c.m.Map								asJava							j.u.Map									See source of JMutableMapWrapper f
 																																		On entries, optional operations will throw
 																																		exception (setValue). TODO: Unimplemented.
 
-s.c.m.Set								asJava							j.u.Set									None.
+s.c.m.Set								asJava							j.u.Set									On iterators, optional operations will throw
+																																		exceptions (remove, set). TODO: Unimplemented
 
-s.c.m.Buffer						asJava							j.u.List								None.
-												asJavaQueue					j.u.{List with Queue}		TODO: Unimplemented.
-												asJavaDeque					j.u.{List with Deque}		On iterators, optional operations will throw
+s.c.m.Buffer						asJava							j.u.List								On iterators, optional operations will throw
+																																		exceptions (remove, set). TODO: Unimplemented
+												asJavaQueue					j.u.{List with Queue}		See source of JBufferDequeWrapper for
+																																		potentially unsafe casts.
+																																		On iterators, optional operations will throw
+																																		exceptions (remove, set). TODO: Unimplemented
+												asJavaDeque					j.u.{List with Deque}		See source of JBufferDequeWrapper for
+																																		potentially unsafe casts.
+																																		On iterators, optional operations will throw
 																																		exceptions (remove, set). TODO: Unimplemented
 
 IF YOU HAVE							AND YOU CALL				YOU WILL GET						WITH THE FOLLOWING KNOWN GOTCHAS
@@ -45,9 +58,9 @@ j.u.Iterator						asScala							s.Iterator							None.
 j.u.Iterable						asScala							s.Iterable							None.
 j.u.Collection					asScala							s.Collection						None.
 j.u.Map									asScala							s.c.Map									None.
-												asScalaMutable			s.c.m.Map								TODO: Unimplemented
+												asScalaMutable			s.c.m.Map								None.
 j.u.Set									asScala							s.c.Set									None.
-												asScalaMutable			s.c.m.Set								TODO: Unimplemented
+												asScalaMutable			s.c.m.Set								None.
 j.u.List								asScala							s.Seq										None.
-												asScalaMutable			???											TODO: Unimplemented
-j.u.{List with Deque}		asScala							s.c.m.Buffer						None.
+												asScalaMutable			s.RAS.Mutable						None.
+j.u.{List with Deque}		asScalaMutable			s.c.m.Buffer						None.

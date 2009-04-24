@@ -27,8 +27,7 @@ trait JImplicits extends Builders {
   implicit def richJEnumeration[T](enumeration: Enumeration[T]) = new RichJEnumeration(enumeration)
   implicit def richJIterator[T](iterator: Iterator[T]) = new RichJIterator(iterator)
   implicit def richJIterable[T](iterable: Iterable[T]) = new RichJIterable(iterable)
-  implicit def richJCollection[T, C[U] <: Collection[U]](collection: C[T]) =
-    new RichJCollection[T, C](collection)
+  implicit def richJCollection[T, C[U] <: Collection[U]](collection: C[T]) = new RichJCollection[T, C](collection)
   implicit def richJList[T](list: List[T]) = new RichJList(list)
   implicit def richJSet[T](set: Set[T]) = new RichJSet(set)
   implicit def richJMap[K, V](map: Map[K, V]) = new RichJMap(map)

@@ -17,14 +17,23 @@
 package org.scala_tools.javautils.j2s
 
 import java.util.List
-import org.scala_tools.javautils.j2s.wrappers.SListWrapper
-import org.scala_tools.javautils.s2j.wrappers.JSeqWrapper
+import org.scala_tools.javautils.j2s.wrappers.{SListWrapper, SMutableListWrapper}
+import org.scala_tools.javautils.s2j.wrappers.{JSeqWrapper, JRandomAccessSeqMutableWrapper}
 
 class RichJList[T](list: List[T]) {
   def asScala: Seq[T] = list match {
     case sw: JSeqWrapper[_] =>
       sw.asScala.asInstanceOf[Seq[T]]
     case _ => new SListWrapper[T] {
+      type Wrapped = List[T]
+      val underlying = list
+    }
+  }
+  
+  def asScalaMutable: RandomAccessSeq.Mutable[T] = list match {
+    case msw: JRandomAccessSeqMutableWrapper[_] =>
+      msw.asScala.asInstanceOf[RandomAccessSeq.Mutable[T]]
+    case _ => new SMutableListWrapper[T] {
       type Wrapped = List[T]
       val underlying = list
     }

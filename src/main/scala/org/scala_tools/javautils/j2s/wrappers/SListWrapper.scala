@@ -21,6 +21,8 @@ import java.util.List
 trait SListWrapper[T] extends Seq[T] with SCollectionWrapper[T] {
   type Wrapped <: List[T]
   
-  def length = underlying.size
-  def apply(index: Int): T = underlying.get(index)
+  def length: Int =
+    underlying.size
+  def apply(index: Int): T =
+    underlying.get(index)
 }

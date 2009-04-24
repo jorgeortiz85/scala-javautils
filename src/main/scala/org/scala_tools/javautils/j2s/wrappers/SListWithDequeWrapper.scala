@@ -19,67 +19,37 @@ package org.scala_tools.javautils.j2s.wrappers
 import java.util.{List => JList, Deque => JDeque}
 import scala.collection.mutable.Buffer
 
-// TODO: Better implementation-specific wrappers
 trait SListWithDequeWrapper[T] extends Buffer[T] with SCollectionWrapper[T] {
   type Wrapped <: JList[T] with JDeque[T]
   
-  override def clear(): Unit = underlying.clear()
+  override def clear(): Unit =
+    underlying.clear()
 
-  override def remove(n: Int): T = {
-    if ((n < 0) || (n >= underlying.size))
-      throw new IndexOutOfBoundsException("cannot remove element at " + n)
+  override def remove(n: Int): T =
+    underlying.remove(n)
 
-    val it = underlying.iterator
-    // cycle through iterator until nth element, keep it as rv
-    var rv = (0 to n).map(_ => it.next).last
-    // remove nth element
-    it.remove
-    // return nth elemtn
-    rv
-  }
+  override def update(n: Int, elem: T): Unit =
+    underlying.set(n, elem)
 
-  override def update(n: Int, elem: T): Unit = {
-    if ((n < 0) || (n >= underlying.size))
-      throw new IndexOutOfBoundsException("cannot update element at " + n)
-    
-    // save first n-1 elements in stack
-    val stack = (0 until n).map(_ => underlying.removeFirst()).reverse
-    // discard nth element
-    underlying.removeFirst()
-    // update nth element
-    underlying.addFirst(elem)
-    // restore first n-1 elements
-    stack.foreach(underlying addFirst _)
-  }
-  
-  def insertAll(n: Int, iter: Iterable[T]): Unit = {
-    if ((n < 0) || (n > underlying.size))
-      throw new IndexOutOfBoundsException("cannot insert element at " + n)
-    
-    // save last size-n elements in stack
-    val stack = (n until underlying.size).map(_ => underlying.removeLast()).reverse
-    // add iter to end of buffer
-    iter.foreach(underlying addLast _)
-    // restore saved stack to end of buffer
-    stack.foreach(underlying addLast _)
-  }
-  
+  def insertAll(n: Int, iter: Iterable[T]): Unit =
+    underlying.addAll(n, Implicits.richSCollection(iter.toList).asJava)
+
   // TODO: Implement
-  def readOnly: Seq[T] = null
+  def readOnly: Seq[T] =
+    null
   
-  def +:(elem: T): Buffer[T] = {
-    underlying.addFirst(elem)
-    this
-  }
-  
-  def +=(elem: T): Unit = {
+  def +:(elem: T): Buffer[T] =
+    returnThis(underlying.addFirst(elem))
+
+  def +=(elem: T): Unit =
     underlying.addLast(elem)
-  }
   
-  def length: Int = underlying.size
+  def length: Int =
+    underlying.size
   
-  def apply(n: Int): T = {
-    val it = underlying.iterator
-    (0 to n).map(_ => it.next).last
-  }
+  def apply(n: Int): T =
+    underlying.get(n)
+
+  protected def returnThis[T](t: T): this.type =
+    this
 }

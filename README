@@ -93,5 +93,7 @@ Some wrapped collections can't be modified, only read.
 None of the wrappers make any attempt at thread-safety, even when the underlying
 collection is thread-safe.
 
+Classes inheriting from Wrapper probably lose symmetry for "equals".
+
 Wrappers often throw the wrong exception (i.e., exception thrown by the wrapped
 collection are not anticipated by the wrapper interface).
