@@ -29,7 +29,7 @@ trait JMutableMapWrapper[K, V] extends JMap[K, V] with JMapWrapper[K, V] {
     //   that uses primitives and is converted to a Java Map?
     underlying.put(key, value).getOrElse(null).asInstanceOf[V]
   override def putAll(t: JMap[_ <: K, _ <: V]): Unit =
-    Implicits.richJMap(t).foreach { (key, value) =>
+    Implicits.richJMap(t).foreach { (key: K, value: V) =>
       underlying(key) = value
     }
   override def remove(key: AnyRef): V =

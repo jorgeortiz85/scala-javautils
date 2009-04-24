@@ -44,7 +44,7 @@ trait JMapWrapper[K, V] extends JMap[K, V] with JWrapper {
   def size: Int =
     underlying.size
   def values: JCollection[V] =
-    Implicits.richSCollection(underlying.values.collect).asJava
+    Implicits.richSCollection(underlying.values.toList).asJava
 
   def clear(): Unit =
     throw new UnsupportedOperationException

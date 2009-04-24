@@ -39,13 +39,13 @@ trait JBufferDequeWrapper[T] extends JDeque[T] with JBufferWrapper[T] {
   override def pollLast(): T =
     nullOr(underlying.remove(last))
   override def getFirst(): T =
-    throwOr(underlying.first)
+    throwOr(underlying(first))
   override def peekFirst(): T =
-    nullOr(underlying.first)
+    nullOr(underlying(first))
   override def getLast(): T =
-    throwOr(underlying.last)
+    throwOr(underlying(last))
   override def peekLast(): T =
-    nullOr(underlying.last)
+    nullOr(underlying(last))
   
   // Queue methods
   override def add(elem: T): Boolean =
@@ -77,7 +77,7 @@ trait JBufferDequeWrapper[T] extends JDeque[T] with JBufferWrapper[T] {
   override def removeFirstOccurrence(other: Any): Boolean = modified {
     underlying.toList.zipWithIndex.filter {
       case (elem, _) => elem == other
-    }.firstOption.foreach {
+    }.headOption.foreach {
       case (_, i) => underlying.remove(i)
     }
   }
