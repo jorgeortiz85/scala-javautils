@@ -24,20 +24,6 @@ import java.util.{Iterator, ArrayList, HashSet, HashMap, Enumeration, Hashtable,
 object Builders extends Builders
 
 trait Builders {
-  implicit def BuildArrayList[T] = Build(new ArrayList[T])
-  implicit def BuildHashSet[T] = Build(new HashSet[T])
-  implicit def BuildHashMap[K, V] = Build(new HashMap[K, V])
-  implicit def BuildHashtable[K, V] = Build(new Hashtable[K, V])
-  implicit def BuildIdentityHashMap[K, V] = Build(new IdentityHashMap[K, V])
-  implicit def BuildLinkedHashMap[K, V] = Build(new LinkedHashMap[K, V])
-  implicit def BuildLinkedHashSet[T] = Build(new LinkedHashSet[T])
-  implicit def BuildLinkedList[T] = Build(new LinkedList[T])
-  implicit def BuildTreeMap[K, V] = Build(new TreeMap[K, V])
-  implicit def BuildTreeSet[T] = Build(new TreeSet[T])
-  implicit def BuildWeakHashMap[K, V] = Build(new WeakHashMap[K, V])
-
-  implicit def BuildList[T]: Build[List[T]] = Build(new ArrayList[T])
-
   // implicit def richJEnumeration[T](enumeration: Enumeration[T]) = new RichJEnumeration(enumeration)
   // implicit def richJIterator[T](iterator: Iterator[T]) = new RichJIterator(iterator)
   // implicit def richJIterable[T](iterable: Iterable[T]) = new RichJIterable(iterable)
