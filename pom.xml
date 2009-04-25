@@ -4,7 +4,7 @@
   <artifactId>javautils</artifactId>
   <packaging>jar</packaging>
   <name>Scala-Java Utilities</name>
-  <version>0.1-SNAPSHOT</version>
+  <version>${scala.version}-1.0-SNAPSHOT</version>
   <url>http://github.com/jorgeortiz85/scala-javautils</url>
   <inceptionYear>2009</inceptionYear>
   <description>Utilities for dealing with Scala and Java collections</description>
@@ -113,4 +113,11 @@
       </plugin>
     </plugins>
   </reporting>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>scala-tools.org</id>
+      <url>dav:http://nexus.scala-tools.org/content/repositories/snapshots</url>
+      <uniqueVersion>false</uniqueVersion>
+    </snapshotRepository>
+  </distributionManagement>
 </project>
