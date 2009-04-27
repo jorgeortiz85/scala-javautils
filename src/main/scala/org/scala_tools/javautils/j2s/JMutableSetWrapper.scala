@@ -14,11 +14,16 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.j2s
 
-import java.util.{Map => JMap, Set => JSet, Collection => JCollection}
-import scala.collection.Set
+import java.util.Set
+import scala.collection.mutable.{Set => SMutableSet}
 
-trait JSetWrapper[T] extends JSet[T] with JCollectionWrapper[T] {
+trait JMutableSetWrapper[T] extends SMutableSet[T] with JSetWrapper[T] {
   type Wrapped <: Set[T]
+  
+  override def +=(elem: T): Unit =
+    underlying.add(elem)
+  override def -=(elem: T): Unit =
+    underlying.remove(elem)
 }

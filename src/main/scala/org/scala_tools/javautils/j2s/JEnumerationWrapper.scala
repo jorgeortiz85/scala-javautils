@@ -14,12 +14,13 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s.wrappers
+package org.scala_tools.javautils.j2s
 
-import java.lang.Iterable
-import scala.{Iterable => SIterable}
+import java.util.Enumeration
+import scala.{Iterator => SIterator}
 
-trait SIterableWrapper[T] extends SIterable[T] with SWrapper {
-  type Wrapped <: Iterable[T]
-  def elements = Implicits.richJIterator(underlying.iterator).asScala
+trait JEnumerationWrapper[T] extends SIterator[T] with JWrapper {
+  type Wrapped <: Enumeration[T]
+  def hasNext: Boolean = underlying.hasMoreElements
+  def next(): T = underlying.nextElement
 }

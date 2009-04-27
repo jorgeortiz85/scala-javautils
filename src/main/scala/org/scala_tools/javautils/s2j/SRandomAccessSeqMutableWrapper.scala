@@ -14,13 +14,13 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.s2j
 
 import java.lang.{Iterable => JIterable}
 import java.util.{Iterator => JIterator, List => JList, Collection => JCollection,
   ListIterator => JListIterator}
 
-trait JRandomAccessSeqMutableWrapper[T] extends JList[T] with JSeqWrapper[T] {
+trait SRandomAccessSeqMutableWrapper[T] extends JList[T] with SSeqWrapper[T] {
   type Wrapped <: RandomAccessSeq.Mutable[T]
 
   // TODO: Implement

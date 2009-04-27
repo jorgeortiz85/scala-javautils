@@ -18,16 +18,15 @@ package org.scala_tools.javautils.s2j
 
 import java.util.{List => JList}
 import scala.collection.jcl.{BufferWrapper => JCLBufferWrapper}
-import org.scala_tools.javautils.s2j.wrappers.JSeqWrapper
-import org.scala_tools.javautils.j2s.wrappers.SListWrapper
+import org.scala_tools.javautils.j2s.JListWrapper
 
 class RichSSeq[T](seq: Seq[T]) {
   def asJava: JList[T] = seq match {
     case bw: JCLBufferWrapper[_] =>
       bw.underlying.asInstanceOf[JList[T]]
-    case lw: SListWrapper[_] =>
+    case lw: JListWrapper[_] =>
       lw.asJava.asInstanceOf[JList[T]]
-    case _ => new JSeqWrapper[T] {
+    case _ => new SSeqWrapper[T] {
       type Wrapped = Seq[T]
       val underlying = seq
     }

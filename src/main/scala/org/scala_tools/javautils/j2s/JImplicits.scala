@@ -24,12 +24,12 @@ import java.util.{Iterator, ArrayList, HashSet, HashMap, Enumeration, Hashtable,
 object JImplicits extends JImplicits
 
 trait JImplicits {
-  implicit def richJEnumeration[T](enumeration: Enumeration[T]) = new RichJEnumeration(enumeration)
-  implicit def richJIterator[T](iterator: Iterator[T]) = new RichJIterator(iterator)
-  implicit def richJIterable[T](iterable: Iterable[T]) = new RichJIterable(iterable)
-  implicit def richJCollection[T](collection: Collection[T]) = new RichJCollection[T](collection)
-  implicit def richJList[T](list: List[T]) = new RichJList(list)
-  implicit def richJSet[T](set: Set[T]) = new RichJSet(set)
-  implicit def richJMap[K, V](map: Map[K, V]) = new RichJMap(map)
-  implicit def richJListWithDeque[T](lwd: List[T] with Deque[T]) = new RichJListWithDeque(lwd)
+  implicit def RichJEnumeration[T](enumeration: Enumeration[T]) = new RichJEnumeration(enumeration)
+  implicit def RichJIterator[T](iterator: Iterator[T]) = new RichJIterator(iterator)
+  implicit def RichJIterable[T](iterable: Iterable[T]) = new RichJIterable(iterable)
+  implicit def RichJCollection[T](collection: Collection[T]) = new RichJCollection[T](collection)
+  implicit def RichJList[T](list: List[T]) = new RichJList(list)
+  implicit def RichJSet[T](set: Set[T]) = new RichJSet(set)
+  implicit def RichJMap[K, V](map: Map[K, V]) = new RichJMap(map)
+  implicit def RichJListWithDeque[T](lwd: List[T] with Deque[T]) = new RichJListWithDeque(lwd)
 }

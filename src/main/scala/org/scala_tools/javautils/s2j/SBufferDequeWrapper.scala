@@ -14,14 +14,14 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.s2j
 
 import java.lang.{Iterable => JIterable}
 import java.util.{Iterator => JIterator, List => JList, Collection => JCollection,
   ListIterator => JListIterator, Deque => JDeque}
 import scala.collection.mutable.Buffer
 
-trait JBufferDequeWrapper[T] extends JDeque[T] with JBufferWrapper[T] {
+trait SBufferDequeWrapper[T] extends JDeque[T] with SBufferWrapper[T] {
   override def addFirst(elem: T): Unit =
     elem +: underlying
   override def offerFirst(elem: T): Boolean =

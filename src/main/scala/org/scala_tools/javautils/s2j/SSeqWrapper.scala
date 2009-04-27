@@ -14,13 +14,13 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.s2j
 
 import java.lang.{Iterable => JIterable}
 import java.util.{Iterator => JIterator, List => JList, Collection => JCollection,
   ListIterator => JListIterator}
 
-trait JSeqWrapper[T] extends JList[T] with JCollectionWrapper[T] {
+trait SSeqWrapper[T] extends JList[T] with SCollectionWrapper[T] {
   type Wrapped <: Seq[T]
   
   def get(index: Int): T =
@@ -62,7 +62,7 @@ trait JSeqWrapper[T] extends JList[T] with JCollectionWrapper[T] {
       throw new UnsupportedOperationException
   }
   def subList(fromIndex: Int, toIndex: Int): JList[T] =
-    Implicits.richSSeq(underlying.projection.slice(fromIndex, toIndex)).asJava
+    Implicits.RichSSeq(underlying.projection.slice(fromIndex, toIndex)).asJava
 
   def add(index: Int, element: T): Unit =
     throw new UnsupportedOperationException

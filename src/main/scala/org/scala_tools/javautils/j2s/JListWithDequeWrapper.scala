@@ -14,12 +14,12 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s.wrappers
+package org.scala_tools.javautils.j2s
 
 import java.util.{List => JList, Deque => JDeque}
 import scala.collection.mutable.Buffer
 
-trait SListWithDequeWrapper[T] extends Buffer[T] with SCollectionWrapper[T] {
+trait JListWithDequeWrapper[T] extends Buffer[T] with JCollectionWrapper[T] {
   type Wrapped <: JList[T] with JDeque[T]
   
   override def clear(): Unit =
@@ -32,7 +32,7 @@ trait SListWithDequeWrapper[T] extends Buffer[T] with SCollectionWrapper[T] {
     underlying.set(n, elem)
 
   def insertAll(n: Int, iter: Iterable[T]): Unit =
-    underlying.addAll(n, Implicits.richSCollection(iter.toList).asJava)
+    underlying.addAll(n, Implicits.RichSCollection(iter.toList).asJava)
 
   // TODO: Implement
   def readOnly: Seq[T] =
