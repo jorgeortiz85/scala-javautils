@@ -14,13 +14,13 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.s2j
 
 import java.lang.{Iterable => JIterable}
 import java.util.{Iterator => JIterator}
 
-trait JIterableWrapper[T] extends JIterable[T] with JWrapper {
+trait SIterableWrapper[T] extends JIterable[T] with SWrapper {
   type Wrapped <: Iterable[T]
   def iterator: JIterator[T] =
-    Implicits.richSIterator(underlying.elements).asJava
+    Implicits.RichSIterator(underlying.elements).asJava
 }

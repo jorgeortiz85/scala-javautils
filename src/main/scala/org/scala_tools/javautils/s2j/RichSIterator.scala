@@ -18,24 +18,23 @@ package org.scala_tools.javautils.s2j
 
 import java.util.{Iterator => JIterator, Enumeration => JEnumeration}
 import scala.collection.jcl.MutableIterator.{Wrapper => JCLIteratorWrapper}
-import org.scala_tools.javautils.j2s.wrappers._
-import org.scala_tools.javautils.s2j.wrappers._
+import org.scala_tools.javautils.j2s._
 
 class RichSIterator[T](iterator: Iterator[T]) {
   def asJava: JIterator[T] = iterator match {
     case iw: JCLIteratorWrapper[_] =>
       iw.underlying.asInstanceOf[JIterator[T]]
-    case iw: SIteratorWrapper[_] =>
+    case iw: JIteratorWrapper[_] =>
       iw.asJava.asInstanceOf[JIterator[T]]
-    case _ => new JIteratorWrapper[T] {
+    case _ => new SIteratorWrapper[T] {
       type Wrapped = Iterator[T]
       val underlying = iterator
     }
   }
   def asJavaEnumeration: JEnumeration[T] = iterator match {
-    case ew: SEnumerationWrapper[_] =>
+    case ew: JEnumerationWrapper[_] =>
       ew.asJava.asInstanceOf[JEnumeration[T]]
-    case _ => new JEnumerationWrapper[T] {
+    case _ => new SEnumerationWrapper[T] {
       type Wrapped = Iterator[T]
       val underlying = iterator
     }

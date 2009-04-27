@@ -14,13 +14,15 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s.wrappers
+package org.scala_tools.javautils.j2s
 
-import java.util.Collection
-import scala.{Collection => SCollection}
+import java.util.List
 
-trait SCollectionWrapper[T] extends SCollection[T] with SIterableWrapper[T] {
-  type Wrapped <: Collection[T]
-
-  override def size = underlying.size
+trait JMutableListWrapper[T] extends RandomAccessSeq.Mutable[T] with JListWrapper[T] {
+  type Wrapped <: List[T]
+  
+  def update(n: Int, elem: T): Unit =
+    underlying.set(n, elem)
+  override def elements: Iterator[T] =
+    super[Mutable].elements
 }

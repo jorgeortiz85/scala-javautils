@@ -20,23 +20,22 @@ import java.util.Map
 import scala.collection.{Map => SMap}
 import scala.collection.mutable.{Map => SMutableMap}
 import scala.Function.untupled
-import org.scala_tools.javautils.s2j.wrappers.{JMapWrapper, JMutableMapWrapper}
-import org.scala_tools.javautils.j2s.wrappers.{SMapWrapper, SMutableMapWrapper}
+import org.scala_tools.javautils.s2j.{SMapWrapper, SMutableMapWrapper}
 
 class RichJMap[K, V](map: Map[K, V]) {
   def asScala: SMap[K, V] = map match {
-    case mw: JMapWrapper[_, _] =>
+    case mw: SMapWrapper[_, _] =>
       mw.asScala.asInstanceOf[SMap[K, V]]
-    case _ => new SMapWrapper[K, V] {
+    case _ => new JMapWrapper[K, V] {
       type Wrapped = Map[K, V]
       val underlying = RichJMap.this.map
     }
   }
   
   def asScalaMutable: SMutableMap[K, V] = map match {
-    case mmw: JMutableMapWrapper[_, _] =>
+    case mmw: SMutableMapWrapper[_, _] =>
       mmw.asScala.asInstanceOf[SMutableMap[K, V]]
-    case _ => new SMutableMapWrapper[K, V] {
+    case _ => new JMutableMapWrapper[K, V] {
       type Wrapped = Map[K, V]
       val underlying = RichJMap.this.map
     }
@@ -46,7 +45,7 @@ class RichJMap[K, V](map: Map[K, V]) {
     foreach(untupled(fn))
 
   def foreach(fn: (K, V) => Unit): Unit =
-    Implicits.richJIterator(map.entrySet.iterator).foreach { entry =>
+    Implicits.RichJIterator(map.entrySet.iterator).foreach { entry =>
       val (key, value) = (entry.getKey, entry.getValue)
       fn(key, value)
     }

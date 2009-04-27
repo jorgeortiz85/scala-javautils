@@ -14,16 +14,10 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.s2j
 
-import java.util.{Iterator => JIterator}
-
-trait JIteratorWrapper[T] extends JIterator[T] with JWrapper {
-  type Wrapped <: Iterator[T]
-  def hasNext: Boolean =
-    underlying.hasNext
-  def next(): T =
-    underlying.next
-  def remove() =
-    throw new UnsupportedOperationException
+trait SWrapper extends Wrapper {
+  protected val wrapperType = "Java"
+  def asScala: Wrapped = underlying
+  def asJava: this.type = this
 }

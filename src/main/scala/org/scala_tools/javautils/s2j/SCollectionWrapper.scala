@@ -14,12 +14,12 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.s2j
 
 import java.lang.{Iterable => JIterable}
 import java.util.{Iterator => JIterator, Collection => JCollection}
 
-trait JCollectionWrapper[T] extends JCollection[T] with JIterableWrapper[T] {
+trait SCollectionWrapper[T] extends JCollection[T] with SIterableWrapper[T] {
   type Wrapped <: Collection[T]
 
   // This helper method takes an action and returns a Boolean indicating
@@ -33,7 +33,7 @@ trait JCollectionWrapper[T] extends JCollection[T] with JIterableWrapper[T] {
   def contains(o: AnyRef): Boolean =
     underlying.exists(_ == o)
   def containsAll(c: JCollection[_]): Boolean =
-    Implicits.richJIterable(c).asScala.forall(this contains _.asInstanceOf[AnyRef])
+    Implicits.RichJIterable(c).asScala.forall(this contains _.asInstanceOf[AnyRef])
   def isEmpty(): Boolean =
     underlying.isEmpty
   def size(): Int =
