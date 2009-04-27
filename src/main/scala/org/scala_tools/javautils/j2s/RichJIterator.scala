@@ -18,8 +18,7 @@ package org.scala_tools.javautils.j2s
 
 import java.util.Iterator
 import scala.{Iterator => SIterator}
-import org.scala_tools.javautils.j2s.wrappers.SIteratorWrapper
-import org.scala_tools.javautils.s2j.wrappers.JIteratorWrapper
+import org.scala_tools.javautils.s2j.SIteratorWrapper
 
 class RichJIterator[T](iterator: Iterator[T]) {
   def foreach(fn: T => Unit): Unit =
@@ -27,9 +26,9 @@ class RichJIterator[T](iterator: Iterator[T]) {
       fn(iterator.next)
 
   def asScala: SIterator[T] = iterator match {
-    case iw: JIteratorWrapper[_] =>
+    case iw: SIteratorWrapper[_] =>
       iw.asScala.asInstanceOf[SIterator[T]]
-    case _ => new SIteratorWrapper[T] {
+    case _ => new JIteratorWrapper[T] {
       type Wrapped = Iterator[T]
       val underlying = iterator
     }
