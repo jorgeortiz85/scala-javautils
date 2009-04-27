@@ -16,25 +16,15 @@
  **/
 package org.scala_tools.javautils.j2s
 
-import java.util.List
-import org.scala_tools.javautils.s2j.{SSeqWrapper, SRandomAccessSeqMutableWrapper}
+import java.util.Map
+import scala.collection.mutable.{Map => SMutableMap}
 
-class RichJList[T](list: List[T]) {
-  def asScala: Seq[T] = list match {
-    case sw: SSeqWrapper[_] =>
-      sw.asScala.asInstanceOf[Seq[T]]
-    case _ => new JListWrapper[T] {
-      type Wrapped = List[T]
-      val underlying = list
-    }
-  }
-  
-  def asScalaMutable: RandomAccessSeq.Mutable[T] = list match {
-    case msw: SRandomAccessSeqMutableWrapper[_] =>
-      msw.asScala.asInstanceOf[RandomAccessSeq.Mutable[T]]
-    case _ => new JMutableListWrapper[T] {
-      type Wrapped = List[T]
-      val underlying = list
-    }
-  }
+trait JMutableMapWrapper[K, V] extends SMutableMap[K, V] with JMapWrapper[K, V] {
+  type Wrapped <: Map[K, V]
+
+  def -=(key: K): Unit =
+    underlying.remove(key)
+
+  def update(key: K, value: V): Unit =
+    underlying.put(key, value)
 }

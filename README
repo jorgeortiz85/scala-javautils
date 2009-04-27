@@ -1,5 +1,38 @@
 Utilities for dealing with Java and Scala collections.
 
+USAGE:
+
+Turn any Scala collection into the corresponding Java collection:
+
+  import org.scala_tools.javautils.Imports._
+
+  List(1, 2, 3).asJava
+  // returns java.util.List[Int]
+
+  Map(1 -> "a", 2 -> "b", 3 -> "c").asJava
+  // returns java.util.Map[Int, String]
+
+  Set(1, 2, 3).asJava
+  // returns java.util.Set[Int]
+
+Turn any Java collection into the corresponding Scala collection:
+
+  val list = new java.util.ArrayList[Int]
+  list.add(1)
+  list.add(2)
+  list.add(3)
+  list.asScala
+  // returns scala.Seq[Int]
+
+For the full list of available conversions, please see the NOTES file.
+
+You can also use foreach on any Java collection:
+
+  list.foreach(print)
+  // prints "123"
+
+The "map", "filter", and "flatMap" methods are still pending.
+
 MOTIVATION:
 
 The Scala standard library includes a set of utilities for working with Java
@@ -17,78 +50,6 @@ collection in Scala (scala.collection.jcl). It is deficient in several ways:
    scala.collection.jcl.Conversions are dangerous and should not be trusted.
    They "massage" types in ways that can be unpredictable for users not
    intimately familiar with scala.collections.jcl.
-
-GOALS:
-
-0) Implicit conversions should be as conservative as possible. They should add
-   no methods beyond "foreach", "filter", "map", "flatMap", "asScala", and
-   "asJava". They should add no types, interfaces, or traits that are ever
-   used outside this package.
-
-With a single "import org.scala_tools.javautils.Implicits._", a user should
-be able to:
-
-1) Use "foreach" (and hence the imperative for-comprehension syntax) with any
-   Java class that implements java.util.Iterable[T]. The straightforward
-   translation of Java for-each syntax:
-   
-     for (E elem : javaIterable) {
-       ...
-     }
-    
-   should work in Scala:
-   
-     for (elem <- javaIterable) {
-       ...
-     }
-   
-   This rule should also hold for Iterable-like interfaces, namely Iterator,
-   Enumeration, and Map.
-
-2) Convert any Java collection into a Scala collection by calling "asScala".
-   This operation should run in constant O(1) time.
-
-3) Convert any Scala collection into a Java collection by calling "asJava"
-   This operation should run in constant O(1) time.
-
-Whenever possible, a user should be able to:
-
-4) Use filter, map, and flatMap on Java collections, exposing the full power
-   of Scala's for-comprehensions. These methods should never modify the
-   collection they are called on, and should always return a new (strict)
-   collection. Whenever possible, the returned collection should be of the
-   same type as the collection on which the method was called.
-
-PROGRESS:
-
-2009-04-06
-Goal #1 has been reached. RichIterable, RichIterator, and RichEnumeration
-provide foreach to Java's Iterable, Iterator, and Enumeration.
-Goal #2 has been mostly reached. All Java classes and interfaces that are
-supported by scala.collection.jcl are provided with a "asScala" method.
-Some of the Java interfaces that are not supported by scala.collection.jcl
-have a "asScala" method that does not run in O(1) time. I'm debating whether
-it's worthwhile to use the jcl wrappers, or to make my own.
-Goal #3 is nowhere near completion. It will likely require a lot of wrappers,
-and jcl is not much help here.
-Goal #4 is kind-of met but I'm unhappy with it. Need to re-think my approach.
-
-2009-04-08
-Made progress towards Goal #3. Added NOTES as to what conversions can be
-expected.
-
-2009-04-09
-Goals #2, and #3 are now mostly met. No attempt has been made to implement
-efficient wrappers. Also, mutability has not been implemented. My new approach
-for Goal #4 blows up the type checker. Oops.
-
-2009-04-10
-Scala->Java wrappers now (mostly) support mutable collections. Java->Scala
-wrappers still don't.
-
-2009-04-23
-Goals #1-3 are fairly complete, for now. The NOTES file describes how
-what conversions exist and can be expected.
 
 KNOWN ISSUES:
 

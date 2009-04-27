@@ -14,13 +14,13 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.s2j
 
 import java.util.{Map => JMap, Set => JSet, Collection => JCollection}
 import scala.collection.Map
 import scala.Function.tupled
 
-trait JMapWrapper[K, V] extends JMap[K, V] with JWrapper {
+trait SMapWrapper[K, V] extends JMap[K, V] with SWrapper {
   type Wrapped <: Map[K, V]
 
   def containsKey(key: AnyRef): Boolean =
@@ -29,7 +29,7 @@ trait JMapWrapper[K, V] extends JMap[K, V] with JWrapper {
   def containsValue(value: AnyRef): Boolean =
     underlying.exists(tupled((k, v) => v == value))
   def entrySet(): JSet[JMap.Entry[K, V]] =
-    Implicits.richSSet(
+    Implicits.RichSSet(
       Set() ++ 
         underlying.elements.map(
           tupled(Entry.apply _ : (K, V) => JMap.Entry[K, V]))
@@ -40,11 +40,11 @@ trait JMapWrapper[K, V] extends JMap[K, V] with JWrapper {
   def isEmpty: Boolean =
     underlying.isEmpty
   def keySet: JSet[K] =
-    Implicits.richSSet(underlying.keySet).asJava
+    Implicits.RichSSet(underlying.keySet).asJava
   def size: Int =
     underlying.size
   def values: JCollection[V] =
-    Implicits.richSCollection(underlying.values.collect).asJava
+    Implicits.RichSCollection(underlying.values.collect).asJava
 
   def clear(): Unit =
     throw new UnsupportedOperationException

@@ -14,14 +14,14 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.s2j
 
 import java.lang.{Iterable => JIterable}
 import java.util.{Iterator => JIterator, List => JList, Collection => JCollection,
   ListIterator => JListIterator}
 import scala.collection.mutable.Buffer
 
-trait JBufferWrapper[T] extends JList[T] with JSeqWrapper[T] {
+trait SBufferWrapper[T] extends JList[T] with SSeqWrapper[T] {
   type Wrapped <: Buffer[T]
 
   override def add(o: T): Boolean =
@@ -29,9 +29,9 @@ trait JBufferWrapper[T] extends JList[T] with JSeqWrapper[T] {
   override def add(index: Int, element: T): Unit =
     underlying.insert(index, element)
   override def addAll(c: JCollection[_ <: T]): Boolean =
-    modified(Implicits.richJIterable(c).foreach(underlying += _))
+    modified(Implicits.RichJIterable(c).foreach(underlying += _))
   override def addAll(index: Int, c: JCollection[_ <: T]): Boolean =
-    modified(underlying.insertAll(index, Implicits.richJIterable(c).asScala))
+    modified(underlying.insertAll(index, Implicits.RichJIterable(c).asScala))
   override def clear(): Unit =
     underlying.clear()
   override def remove(o: AnyRef): Boolean =
@@ -39,7 +39,7 @@ trait JBufferWrapper[T] extends JList[T] with JSeqWrapper[T] {
   override def remove(index: Int): T =
     underlying.remove(index)
   override def removeAll(c: JCollection[_]): Boolean =
-    modified(Implicits.richJIterable(c).foreach(underlying -= _.asInstanceOf[T]))
+    modified(Implicits.RichJIterable(c).foreach(underlying -= _.asInstanceOf[T]))
   override def retainAll(c: JCollection[_]): Boolean =
     modified(underlying.toList.remove(c contains _).foreach(underlying -= _))
   override def set(index: Int, element: T): T = {
@@ -80,5 +80,5 @@ trait JBufferWrapper[T] extends JList[T] with JSeqWrapper[T] {
   //     throw new UnsupportedOperationException
   // }
   // override def subList(fromIndex: Int, toIndex: Int): JList[T] =
-  //   Implicits.richSSeq(underlying.projection.slice(fromIndex, toIndex)).asJava
+  //   Implicits.RichSSeq(underlying.projection.slice(fromIndex, toIndex)).asJava
 }

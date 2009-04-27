@@ -18,17 +18,16 @@ package org.scala_tools.javautils.j2s
 
 import java.lang.Iterable
 import scala.{Iterable => SIterable}
-import org.scala_tools.javautils.j2s.wrappers.SIterableWrapper
-import org.scala_tools.javautils.s2j.wrappers.JIterableWrapper
+import org.scala_tools.javautils.s2j.SIterableWrapper
 
 class RichJIterable[T](iterable: Iterable[T]) {
   def foreach(fn: T => Unit): Unit =
-    Implicits.richJIterator(iterable.iterator).foreach(fn)
+    Implicits.RichJIterator(iterable.iterator).foreach(fn)
 
   def asScala: SIterable[T] = iterable match {
-    case iw: JIterableWrapper[_] =>
+    case iw: SIterableWrapper[_] =>
       iw.asScala.asInstanceOf[SIterable[T]]
-    case _ => new SIterableWrapper[T] {
+    case _ => new JIterableWrapper[T] {
       type Wrapped = Iterable[T]
       val underlying = iterable
     }

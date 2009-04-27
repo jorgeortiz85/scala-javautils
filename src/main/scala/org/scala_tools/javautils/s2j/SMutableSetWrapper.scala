@@ -14,24 +14,24 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.s2j
 
 import java.util.{Map => JMap, Set => JSet, Collection => JCollection}
 import scala.collection.mutable.Set
 
-trait JMutableSetWrapper[T] extends JSet[T] with JSetWrapper[T] {
+trait SMutableSetWrapper[T] extends JSet[T] with SSetWrapper[T] {
   type Wrapped <: Set[T]
 
   override def add(o: T): Boolean = 
     modified(underlying += o)
   override def addAll(c: JCollection[_ <: T]): Boolean =
-    modified(Implicits.richJIterable(c).foreach(underlying += _))
+    modified(Implicits.RichJIterable(c).foreach(underlying += _))
   override def clear(): Unit =
     underlying.clear()
   override def remove(o: AnyRef): Boolean =
     modified(underlying -= o.asInstanceOf[T])
   override def removeAll(c: JCollection[_]): Boolean =
-    modified(Implicits.richJIterable(c).foreach(underlying -= _.asInstanceOf[T]))
+    modified(Implicits.RichJIterable(c).foreach(underlying -= _.asInstanceOf[T]))
   override def retainAll(c: JCollection[_]): Boolean =
     modified(underlying.retain(c contains _))
 }

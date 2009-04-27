@@ -19,36 +19,34 @@ package org.scala_tools.javautils.s2j
 import java.util.{List => JList, Deque => JDeque, Queue => JQueue}
 import scala.collection.jcl.{BufferWrapper => JCLBufferWrapper}
 import scala.collection.mutable.Buffer
-import org.scala_tools.javautils.s2j.wrappers.{JBufferWrapper,
-  JBufferDequeWrapper}
-import org.scala_tools.javautils.j2s.wrappers.{SListWrapper,
-  SListWithDequeWrapper}
+import org.scala_tools.javautils.j2s.{JListWrapper,
+  JListWithDequeWrapper}
 
 class RichSBuffer[T](buffer: Buffer[T]) {
   def asJava: JList[T] = buffer match {
     case bw: JCLBufferWrapper[_] =>
       bw.underlying.asInstanceOf[JList[T]]
-    case lw: SListWrapper[_] =>
+    case lw: JListWrapper[_] =>
       lw.asJava.asInstanceOf[JList[T]]
-    case _ => new JBufferWrapper[T] {
+    case _ => new SBufferWrapper[T] {
       type Wrapped = Buffer[T]
       val underlying = buffer
     }
   }
 
   def asJavaQueue: JList[T] with JQueue[T] = buffer match {
-    case dw: SListWithDequeWrapper[_] =>
+    case dw: JListWithDequeWrapper[_] =>
       dw.asJava.asInstanceOf[JList[T] with JQueue[T]]
-    case _ => new JBufferDequeWrapper[T] {
+    case _ => new SBufferDequeWrapper[T] {
       type Wrapped = Buffer[T]
       val underlying = buffer
     }
   }
 
   def asJavaDeque: JList[T] with JDeque[T] = buffer match {
-    case dw: SListWithDequeWrapper[_] =>
+    case dw: JListWithDequeWrapper[_] =>
       dw.asJava.asInstanceOf[JList[T] with JDeque[T]]
-    case _ => new JBufferDequeWrapper[T] {
+    case _ => new SBufferDequeWrapper[T] {
       type Wrapped = Buffer[T]
       val underlying = buffer
     }

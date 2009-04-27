@@ -18,16 +18,15 @@ package org.scala_tools.javautils.s2j
 
 import java.util.{Collection => JCollection}
 import scala.collection.jcl.{IterableWrapper => JCLIterableWrapper}
-import org.scala_tools.javautils.s2j.wrappers.JCollectionWrapper
-import org.scala_tools.javautils.j2s.wrappers.SCollectionWrapper
+import org.scala_tools.javautils.j2s.JCollectionWrapper
 
 class RichSCollection[T](collection: Collection[T]) {
   def asJava: JCollection[T] = collection match {
     case iw: JCLIterableWrapper[_] =>
       iw.underlying.asInstanceOf[JCollection[T]]
-    case iw: SCollectionWrapper[_] =>
+    case iw: JCollectionWrapper[_] =>
       iw.asJava.asInstanceOf[JCollection[T]]
-    case _ => new JCollectionWrapper[T] {
+    case _ => new SCollectionWrapper[T] {
       type Wrapped = Collection[T]
       val underlying = collection
     }

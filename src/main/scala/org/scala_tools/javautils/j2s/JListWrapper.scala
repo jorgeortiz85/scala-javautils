@@ -14,17 +14,15 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s.wrappers
+package org.scala_tools.javautils.j2s
 
-import java.util.Map
-import scala.collection.mutable.{Map => SMutableMap}
+import java.util.List
 
-trait SMutableMapWrapper[K, V] extends SMutableMap[K, V] with SMapWrapper[K, V] {
-  type Wrapped <: Map[K, V]
-
-  def -=(key: K): Unit =
-    underlying.remove(key)
-
-  def update(key: K, value: V): Unit =
-    underlying.put(key, value)
+trait JListWrapper[T] extends Seq[T] with JCollectionWrapper[T] {
+  type Wrapped <: List[T]
+  
+  def length: Int =
+    underlying.size
+  def apply(index: Int): T =
+    underlying.get(index)
 }

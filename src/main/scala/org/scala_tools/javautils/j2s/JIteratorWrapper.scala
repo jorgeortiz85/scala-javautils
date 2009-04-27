@@ -14,15 +14,13 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s.wrappers
+package org.scala_tools.javautils.j2s
 
-import java.util.List
+import java.util.Iterator
+import scala.{Iterator => SIterator}
 
-trait SMutableListWrapper[T] extends RandomAccessSeq.Mutable[T] with SListWrapper[T] {
-  type Wrapped <: List[T]
-  
-  def update(n: Int, elem: T): Unit =
-    underlying.set(n, elem)
-  override def elements: Iterator[T] =
-    super[Mutable].elements
+trait JIteratorWrapper[T] extends SIterator[T] with JWrapper {
+  type Wrapped <: Iterator[T]
+  def hasNext: Boolean = underlying.hasNext
+  def next(): T = underlying.next
 }

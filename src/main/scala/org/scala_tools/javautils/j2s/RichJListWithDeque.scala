@@ -18,14 +18,13 @@ package org.scala_tools.javautils.j2s
 
 import java.util.{List => JList, Deque => JDeque}
 import scala.collection.mutable.Buffer
-import org.scala_tools.javautils.j2s.wrappers.SListWithDequeWrapper
-import org.scala_tools.javautils.s2j.wrappers.JBufferDequeWrapper
+import org.scala_tools.javautils.s2j.SBufferDequeWrapper
 
 class RichJListWithDeque[T](lwd: JList[T] with JDeque[T]) {
   def asScalaMutable: Buffer[T] = lwd match {
-    case bdw: JBufferDequeWrapper[_] =>
+    case bdw: SBufferDequeWrapper[_] =>
       bdw.asScala.asInstanceOf[Buffer[T]]
-    case _ => new SListWithDequeWrapper[T] {
+    case _ => new JListWithDequeWrapper[T] {
       type Wrapped = JList[T] with JDeque[T]
       val underlying = lwd
     }
