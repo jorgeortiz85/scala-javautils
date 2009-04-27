@@ -19,16 +19,15 @@ package org.scala_tools.javautils.s2j
 import java.util.{Set => JSet}
 import scala.collection.jcl.{SetWrapper => JCLSetWrapper}
 import scala.collection.Set
-import org.scala_tools.javautils.s2j.wrappers.JSetWrapper
-import org.scala_tools.javautils.j2s.wrappers.SSetWrapper
+import org.scala_tools.javautils.j2s.JSetWrapper
 
 class RichSSet[T](set: Set[T]) {
   def asJava: JSet[T] = set match {
     case sw: JCLSetWrapper[_] =>
       sw.underlying.asInstanceOf[JSet[T]]
-    case sw: SSetWrapper[_] =>
+    case sw: JSetWrapper[_] =>
       sw.asJava.asInstanceOf[JSet[T]]
-    case _ => new JSetWrapper[T] {
+    case _ => new SSetWrapper[T] {
       type Wrapped = Set[T]
       val underlying = set
     }

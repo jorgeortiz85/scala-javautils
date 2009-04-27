@@ -14,12 +14,14 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.j2s
 
-import java.util.{Enumeration => JEnumeration}
+import java.util.Set
+import scala.collection.{Set => SSet}
 
-trait JEnumerationWrapper[T] extends JEnumeration[T] with JWrapper {
-  type Wrapped <: Iterator[T]
-  def hasMoreElements: Boolean = underlying.hasNext
-  def nextElement(): T = underlying.next
+trait JSetWrapper[T] extends SSet[T] with JCollectionWrapper[T] {
+  type Wrapped <: Set[T]
+  
+  def contains(elem: T): Boolean =
+    underlying.contains(elem)
 }

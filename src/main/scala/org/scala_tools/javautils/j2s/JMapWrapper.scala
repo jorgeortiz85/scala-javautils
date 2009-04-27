@@ -14,10 +14,23 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.j2s
 
-trait JWrapper extends Wrapper {
-  protected val wrapperType = "Java"
-  def asScala: Wrapped = underlying
-  def asJava: this.type = this
+import java.util.Map
+import scala.collection.{Map => SMap}
+
+trait JMapWrapper[K, V] extends SMap[K, V] with JWrapper {
+  type Wrapped <: Map[K, V]
+  
+  def get(key: K): Option[V] =
+    if (underlying.containsKey(key))
+      Some(underlying.get(key))
+    else
+      None
+  def size =
+    underlying.size
+  def elements =
+    Implicits.RichJIterator(underlying.entrySet.iterator).asScala.map { entry =>
+      (entry.getKey, entry.getValue)
+    }
 }

@@ -14,12 +14,12 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.s2j.wrappers
+package org.scala_tools.javautils.s2j
 
 import java.util.{Map => JMap}
 import scala.collection.mutable.Map
 
-trait JMutableMapWrapper[K, V] extends JMap[K, V] with JMapWrapper[K, V] {
+trait SMutableMapWrapper[K, V] extends JMap[K, V] with SMapWrapper[K, V] {
   type Wrapped <: Map[K, V]
 
   override def clear(): Unit =
@@ -29,7 +29,7 @@ trait JMutableMapWrapper[K, V] extends JMap[K, V] with JMapWrapper[K, V] {
     //   that uses primitives and is converted to a Java Map?
     underlying.put(key, value).getOrElse(null).asInstanceOf[V]
   override def putAll(t: JMap[_ <: K, _ <: V]): Unit =
-    Implicits.richJMap(t).foreach { (key: K, value: V) =>
+    Implicits.RichJMap(t).foreach { (key: K, value: V) =>
       underlying(key) = value
     }
   override def remove(key: AnyRef): V =

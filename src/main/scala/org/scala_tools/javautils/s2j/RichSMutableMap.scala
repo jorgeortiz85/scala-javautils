@@ -19,16 +19,15 @@ package org.scala_tools.javautils.s2j
 import java.util.{Map => JMap}
 import scala.collection.mutable.Map
 import scala.collection.jcl.{MapWrapper => JCLMapWrapper}
-import org.scala_tools.javautils.s2j.wrappers.JMutableMapWrapper
-import org.scala_tools.javautils.j2s.wrappers.SMapWrapper
+import org.scala_tools.javautils.j2s.JMapWrapper
 
 class RichSMutableMap[K, V](map: Map[K, V]) {
   def asJava: JMap[K, V] = map match {
     case mw: JCLMapWrapper[_, _] =>
       mw.underlying.asInstanceOf[JMap[K, V]]
-    case mw: SMapWrapper[_, _] =>
+    case mw: JMapWrapper[_, _] =>
       mw.asJava.asInstanceOf[JMap[K, V]]
-    case _ => new JMutableMapWrapper[K, V] {
+    case _ => new SMutableMapWrapper[K, V] {
       type Wrapped = Map[K, V]
       val underlying = map
     }

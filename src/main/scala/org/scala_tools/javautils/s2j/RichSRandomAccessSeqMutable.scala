@@ -18,16 +18,15 @@ package org.scala_tools.javautils.s2j
 
 import java.util.{List => JList}
 import scala.collection.jcl.{BufferWrapper => JCLBufferWrapper}
-import org.scala_tools.javautils.s2j.wrappers.JRandomAccessSeqMutableWrapper
-import org.scala_tools.javautils.j2s.wrappers.SMutableListWrapper
+import org.scala_tools.javautils.j2s.JMutableListWrapper
 
 class RichSRandomAccessSeqMutable[T](seq: RandomAccessSeq.Mutable[T]) {
   def asJava: JList[T] = seq match {
     case bw: JCLBufferWrapper[_] =>
       bw.underlying.asInstanceOf[JList[T]]
-    case mlw: SMutableListWrapper[_] =>
+    case mlw: JMutableListWrapper[_] =>
       mlw.asJava.asInstanceOf[JList[T]]
-    case _ => new JRandomAccessSeqMutableWrapper[T] {
+    case _ => new SRandomAccessSeqMutableWrapper[T] {
       type Wrapped = RandomAccessSeq.Mutable[T]
       val underlying = seq
     }

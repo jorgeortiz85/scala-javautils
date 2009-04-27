@@ -14,23 +14,12 @@
  * limitations under the License. 
  *
  **/
-package org.scala_tools.javautils.j2s.wrappers
+package org.scala_tools.javautils.j2s
 
-import java.util.Map
-import scala.collection.{Map => SMap}
+import java.lang.Iterable
+import scala.{Iterable => SIterable}
 
-trait SMapWrapper[K, V] extends SMap[K, V] with SWrapper {
-  type Wrapped <: Map[K, V]
-  
-  def get(key: K): Option[V] =
-    if (underlying.containsKey(key))
-      Some(underlying.get(key))
-    else
-      None
-  def size =
-    underlying.size
-  def elements =
-    Implicits.richJIterator(underlying.entrySet.iterator).asScala.map { entry =>
-      (entry.getKey, entry.getValue)
-    }
+trait JIterableWrapper[T] extends SIterable[T] with JWrapper {
+  type Wrapped <: Iterable[T]
+  def elements = Implicits.RichJIterator(underlying.iterator).asScala
 }
