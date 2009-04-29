@@ -26,6 +26,8 @@ s.c.Map									asJava							j.u.Map									Optional operations will throw exce
 																																		put, putAll, remove).
 																																		On entries, optional operations will throw
 																																		exceptions (setValue).
+												asJavaDictionary    j.u.Dictionary					Mutating operations will throw exceptions (put,
+																																		remove).
 
 s.c.Set									asJava							j.u.Set									Optional operations will throw exceptions (add,
 																																		addAll, clear, remove, removeAll, retainAll).
@@ -36,6 +38,7 @@ s.c.m.Map								asJava							j.u.Map									See source of JMutableMapWrapper f
 																																		unsafe casts.
 																																		On entries, optional operations will throw
 																																		exception (setValue). TODO: Unimplemented.
+         								asJavaDictionary	  j.u.Dictionary					
 
 s.c.m.Set								asJava							j.u.Set									On iterators, optional operations will throw
 																																		exceptions (remove, set). TODO: Unimplemented

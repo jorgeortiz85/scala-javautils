@@ -22,14 +22,14 @@ import scala.collection.mutable.{Set => MSet, Map => MMap, Buffer}
 object SImplicits extends SImplicits
 
 trait SImplicits {
-  implicit def RichSIterator[T](iterator: Iterator[T]) = new RichSIterator(iterator)
-  implicit def RichSIterable[T](iterable: Iterable[T]) = new RichSIterable(iterable)
-  implicit def RichSCollection[T](collection: Collection[T]) = new RichSCollection(collection)
-  implicit def RichSSeq[T](seq: Seq[T]) = new RichSSeq(seq)
-  implicit def RichSRandomAccessSeqMutable[T](seq: RandomAccessSeq.Mutable[T]) = new RichSRandomAccessSeqMutable(seq)
-  implicit def RichSBuffer[T](buffer: Buffer[T]) = new RichSBuffer(buffer)
-  implicit def RichSSet[T](set: Set[T]) = new RichSSet(set)
-  implicit def RichSMutableSet[T](set: MSet[T]) = new RichSMutableSet(set)
-  implicit def RichSMap[K, V](map: Map[K, V]) = new RichSMap(map)
-  implicit def RichSMutableMap[K, V](map: MMap[K, V]) = new RichSMutableMap(map)
+  implicit def RichSIterator[T](iterator: Iterator[T]): RichSIterator[T] = new RichSIterator(iterator)
+  implicit def RichSIterable[T](iterable: Iterable[T]): RichSIterable[T] = new RichSIterable(iterable)
+  implicit def RichSCollection[T](collection: Collection[T]): RichSCollection[T] = new RichSCollection(collection)
+  implicit def RichSSeq[T](seq: Seq[T]): RichSSeq[T] = new RichSSeq(seq)
+  implicit def RichSRandomAccessSeqMutable[T](seq: RandomAccessSeq.Mutable[T]): RichSRandomAccessSeqMutable[T] = new RichSRandomAccessSeqMutable(seq)
+  implicit def RichSBuffer[T](buffer: Buffer[T]): RichSBuffer[T] = new RichSBuffer(buffer)
+  implicit def RichSSet[T](set: Set[T]): RichSSet[T] = new RichSSet(set)
+  implicit def RichSMutableSet[T](set: MSet[T]): RichSMutableSet[T] = new RichSMutableSet(set)
+  implicit def RichSMap[K, V](map: Map[K, V]): RichSMap[K, V] = new RichSMap(map)
+  implicit def RichSMutableMap[K, V](map: MMap[K, V]): RichSMutableMap[K, V] = new RichSMutableMap(map)
 }
