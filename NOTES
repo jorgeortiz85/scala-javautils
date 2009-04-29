@@ -38,7 +38,8 @@ s.c.m.Map								asJava							j.u.Map									See source of JMutableMapWrapper f
 																																		unsafe casts.
 																																		On entries, optional operations will throw
 																																		exception (setValue). TODO: Unimplemented.
-         								asJavaDictionary	  j.u.Dictionary					
+         								asJavaDictionary	  j.u.Dictionary					See source of JMutableDictionaryMapper for
+																																		potentially unsafe casts.
 
 s.c.m.Set								asJava							j.u.Set									On iterators, optional operations will throw
 																																		exceptions (remove, set). TODO: Unimplemented
@@ -60,6 +61,8 @@ j.u.Enumeration					asScala							s.Iterator							None.
 j.u.Iterator						asScala							s.Iterator							None.
 j.u.Iterable						asScala							s.Iterable							None.
 j.u.Collection					asScala							s.Collection						None.
+j.u.Dictionary					asScala							s.c.Map									None.
+												asScalaMutable			s.c.m.Map								None.
 j.u.Map									asScala							s.c.Map									None.
 												asScalaMutable			s.c.m.Map								None.
 j.u.Set									asScala							s.c.Set									None.
