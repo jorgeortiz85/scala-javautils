@@ -16,10 +16,10 @@
  **/
 package org.scala_tools.javautils.s2j
 
-import java.util.{Map => JMap}
+import java.util.{Map => JMap, Dictionary => JDictionary}
 import scala.collection.mutable.Map
 import scala.collection.jcl.{MapWrapper => JCLMapWrapper}
-import org.scala_tools.javautils.j2s.JMapWrapper
+import org.scala_tools.javautils.j2s.{JMapWrapper, JDictionaryWrapper}
 
 class RichSMutableMap[K, V](map: Map[K, V]) {
   def asJava: JMap[K, V] = map match {
@@ -28,6 +28,15 @@ class RichSMutableMap[K, V](map: Map[K, V]) {
     case mw: JMapWrapper[_, _] =>
       mw.asJava.asInstanceOf[JMap[K, V]]
     case _ => new SMutableMapWrapper[K, V] {
+      type Wrapped = Map[K, V]
+      val underlying = map
+    }
+  }
+  
+  def asJavaDictionary: JDictionary[K, V] = map match {
+    case dw: JDictionaryWrapper[_, _] =>
+      dw.asJava.asInstanceOf[JDictionary[K, V]]
+    case _ => new SMutableMapDictionaryWrapper[K, V] {
       type Wrapped = Map[K, V]
       val underlying = map
     }

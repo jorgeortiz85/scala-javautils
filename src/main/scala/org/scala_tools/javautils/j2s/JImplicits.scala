@@ -17,19 +17,20 @@
 package org.scala_tools.javautils.j2s
 
 import java.lang.Iterable
-import java.util.{Iterator, ArrayList, HashSet, HashMap, Enumeration, Hashtable,
+import java.util.{Iterator, ArrayList, HashSet, HashMap, Enumeration, Dictionary, Hashtable,
   IdentityHashMap, LinkedHashMap, LinkedHashSet, LinkedList, TreeMap, TreeSet, WeakHashMap,
   List, Map, Set, Collection, Deque}
 
 object JImplicits extends JImplicits
 
 trait JImplicits {
-  implicit def RichJEnumeration[T](enumeration: Enumeration[T]) = new RichJEnumeration(enumeration)
-  implicit def RichJIterator[T](iterator: Iterator[T]) = new RichJIterator(iterator)
-  implicit def RichJIterable[T](iterable: Iterable[T]) = new RichJIterable(iterable)
-  implicit def RichJCollection[T](collection: Collection[T]) = new RichJCollection[T](collection)
-  implicit def RichJList[T](list: List[T]) = new RichJList(list)
-  implicit def RichJSet[T](set: Set[T]) = new RichJSet(set)
-  implicit def RichJMap[K, V](map: Map[K, V]) = new RichJMap(map)
-  implicit def RichJListWithDeque[T](lwd: List[T] with Deque[T]) = new RichJListWithDeque(lwd)
+  implicit def RichJEnumeration[T](enumeration: Enumeration[T]): RichJEnumeration[T] = new RichJEnumeration(enumeration)
+  implicit def RichJIterator[T](iterator: Iterator[T]): RichJIterator[T] = new RichJIterator(iterator)
+  implicit def RichJIterable[T](iterable: Iterable[T]): RichJIterable[T] = new RichJIterable(iterable)
+  implicit def RichJCollection[T](collection: Collection[T]): RichJCollection[T] = new RichJCollection[T](collection)
+  implicit def RichJList[T](list: List[T]): RichJList[T] = new RichJList(list)
+  implicit def RichJSet[T](set: Set[T]): RichJSet[T] = new RichJSet(set)
+  implicit def RichJMap[K, V](map: Map[K, V]): RichJMap[K, V] = new RichJMap(map)
+  implicit def RichJDictionary[K, V](dictionary: Dictionary[K, V]): RichJDictionary[K, V] = new RichJDictionary(dictionary)
+  implicit def RichJListWithDeque[T](lwd: List[T] with Deque[T]): RichJListWithDeque[T] = new RichJListWithDeque(lwd)
 }
