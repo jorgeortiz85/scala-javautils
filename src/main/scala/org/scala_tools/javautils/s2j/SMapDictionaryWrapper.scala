@@ -23,7 +23,7 @@ import scala.Function.tupled
 trait SMapDictionaryWrapper[K, V] extends JDictionary[K, V] with SWrapper {
   type Wrapped <: Map[K, V]
 
-  override def get(key: AnyRef): V =
+  override def get(key: Any): V =
     // K is erased so this cast is safe
     underlying.apply(key.asInstanceOf[K])
   
@@ -39,6 +39,6 @@ trait SMapDictionaryWrapper[K, V] extends JDictionary[K, V] with SWrapper {
 
   override def put(key: K, value: V): V =
     throw new UnsupportedOperationException
-  override def remove(key: AnyRef): V =
+  override def remove(key: Any): V =
     throw new UnsupportedOperationException
 }
