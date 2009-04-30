@@ -1,0 +1,25 @@
+<document>
+  <properties>
+    <title>Changes for scala-javautils</title>
+    <author></author>
+  </properties>
+  <body>
+  <!-- mini guide
+    <action
+      dev="Name of developer who committed the change"
+      type="add|fix|remove|update"
+      issue="(optional) Id of the issue related to this change"
+      due-to="(optional)Name of the person 'non-committer' to be credited for this change"
+      >
+      description
+    </action>
+    see http://maven.apache.org/plugins/maven-changes-plugin/usage.html for full guide
+  -->
+    <release version="0.2-SNAPSHOT" date="" description="">
+      <action dev="Jorge Ortiz" type="add">Added explicit return types to all implicits</action>      
+      <action dev="Jorge Ortiz" type="add">Added support for turning s.c.Map and s.c.m.Map into j.u.Dictionary</action>
+      <action dev="Jorge Ortiz" type="add">Added support for turning j.u.Dictionary into s.c.Map and s.c.m.Map</action>
+    </release>
+    <release version="0.1" date="2009-04-27" description="First public release" />
+  </body>
+</document>
