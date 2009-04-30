@@ -27,7 +27,7 @@ trait SMutableMapDictionaryWrapper[K, V] extends JDictionary[K, V]
     // TODO: Is this cast safe?? What's the correct behavior for a Scala Map
     //   that uses primitives and is converted to a Java Map?
     underlying.put(key, value).getOrElse(null).asInstanceOf[V]
-  override def remove(key: AnyRef): V =
+  override def remove(key: Any): V =
     // TODO: Are these casts safe??
     underlying.removeKey(key.asInstanceOf[K]).getOrElse(null).asInstanceOf[V]
 }
