@@ -19,7 +19,7 @@ package org.scala_tools.javautils.j2s
 import java.lang.Iterable
 import java.util.{Iterator, ArrayList, HashSet, HashMap, Enumeration, Dictionary, Hashtable,
   IdentityHashMap, LinkedHashMap, LinkedHashSet, LinkedList, TreeMap, TreeSet, WeakHashMap,
-  List, Map, Set, Collection, Deque}
+  List, Map, Set, Collection, Queue}
 
 object JImplicits extends JImplicits
 
@@ -32,5 +32,4 @@ trait JImplicits {
   implicit def RichJSet[T](set: Set[T]): RichJSet[T] = new RichJSet(set)
   implicit def RichJMap[K, V](map: Map[K, V]): RichJMap[K, V] = new RichJMap(map)
   implicit def RichJDictionary[K, V](dictionary: Dictionary[K, V]): RichJDictionary[K, V] = new RichJDictionary(dictionary)
-  implicit def RichJListWithDeque[T](lwd: List[T] with Deque[T]): RichJListWithDeque[T] = new RichJListWithDeque(lwd)
 }
