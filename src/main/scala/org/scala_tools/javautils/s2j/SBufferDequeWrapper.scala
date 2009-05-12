@@ -18,82 +18,23 @@ package org.scala_tools.javautils.s2j
 
 import java.lang.{Iterable => JIterable}
 import java.util.{Iterator => JIterator, List => JList, Collection => JCollection,
-  ListIterator => JListIterator, Deque => JDeque}
+  ListIterator => JListIterator, Queue => JQueue}
 import scala.collection.mutable.Buffer
 
-trait SBufferDequeWrapper[T] extends JDeque[T] with SBufferWrapper[T] {
-  override def addFirst(elem: T): Unit =
-    elem +: underlying
-  override def offerFirst(elem: T): Boolean =
-    modified(elem +: underlying)
-  override def addLast(elem: T): Unit =
-    underlying += elem
-  override def offerLast(elem: T): Boolean =
-    modified(underlying += elem)
-  override def removeFirst(): T =
-    throwOr(underlying.remove(first))
-  override def pollFirst(): T =
-    nullOr(underlying.remove(first))
-  override def removeLast(): T =
-    throwOr(underlying.remove(last))
-  override def pollLast(): T =
-    nullOr(underlying.remove(last))
-  override def getFirst(): T =
-    throwOr(underlying.first)
-  override def peekFirst(): T =
-    nullOr(underlying.first)
-  override def getLast(): T =
-    throwOr(underlying.last)
-  override def peekLast(): T =
-    nullOr(underlying.last)
-  
+trait SBufferQueueWrapper[T] extends JQueue[T] with SBufferWrapper[T] {
   // Queue methods
   override def add(elem: T): Boolean =
-    modified(addLast(elem))
+    modified(underlying += elem)
   override def offer(elem: T): Boolean =
-    offerLast(elem)
+    modified(underlying += elem)
   override def remove(): T =
-    removeFirst()
+    throwOr(underlying.remove(first))
   override def poll(): T =
-    pollFirst()
+    nullOr(underlying.remove(first))
   override def element(): T =
-    getFirst()
+    throwOr(underlying.first)
   override def peek(): T =
-    peekFirst()
-
-  // Stack methods (along with peek() above)
-  override def push(elem: T): Unit =
-    addFirst(elem)
-  override def pop(): T =
-    removeFirst()
-
-  override def removeLastOccurrence(other: Any): Boolean = modified {
-    underlying.toList.zipWithIndex.filter {
-      case (elem, _) => elem == other
-    }.lastOption.foreach {
-      case (_, i) => underlying.remove(i)
-    }
-  }
-  override def removeFirstOccurrence(other: Any): Boolean = modified {
-    underlying.toList.zipWithIndex.filter {
-      case (elem, _) => elem == other
-    }.firstOption.foreach {
-      case (_, i) => underlying.remove(i)
-    }
-  }
-  override def descendingIterator(): JIterator[T] = new JIterator[T] {
-    private var i = underlying.size
-    override def hasNext() = i > 0
-    override def next(): T = {
-      if (i == 0)
-        throw new NoSuchElementException
-
-      i -= 1
-      underlying(i)
-    }
-    override def remove() =
-      throw new UnsupportedOperationException
-  }
+    nullOr(underlying.first)
 
   // Helper methods
   private def first = 0

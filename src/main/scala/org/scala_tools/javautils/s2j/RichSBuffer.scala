@@ -16,11 +16,10 @@
  **/
 package org.scala_tools.javautils.s2j
 
-import java.util.{List => JList, Deque => JDeque, Queue => JQueue}
+import java.util.{List => JList, Queue => JQueue}
 import scala.collection.jcl.{BufferWrapper => JCLBufferWrapper}
 import scala.collection.mutable.Buffer
-import org.scala_tools.javautils.j2s.{JListWrapper,
-  JListWithDequeWrapper}
+import org.scala_tools.javautils.j2s.JListWrapper
 
 class RichSBuffer[T](buffer: Buffer[T]) {
   def asJava: JList[T] = buffer match {
@@ -35,18 +34,7 @@ class RichSBuffer[T](buffer: Buffer[T]) {
   }
 
   def asJavaQueue: JList[T] with JQueue[T] = buffer match {
-    case dw: JListWithDequeWrapper[_] =>
-      dw.asJava.asInstanceOf[JList[T] with JQueue[T]]
-    case _ => new SBufferDequeWrapper[T] {
-      type Wrapped = Buffer[T]
-      val underlying = buffer
-    }
-  }
-
-  def asJavaDeque: JList[T] with JDeque[T] = buffer match {
-    case dw: JListWithDequeWrapper[_] =>
-      dw.asJava.asInstanceOf[JList[T] with JDeque[T]]
-    case _ => new SBufferDequeWrapper[T] {
+    case _ => new SBufferQueueWrapper[T] {
       type Wrapped = Buffer[T]
       val underlying = buffer
     }
