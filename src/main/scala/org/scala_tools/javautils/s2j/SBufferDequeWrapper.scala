@@ -32,9 +32,9 @@ trait SBufferQueueWrapper[T] extends JQueue[T] with SBufferWrapper[T] {
   override def poll(): T =
     nullOr(underlying.remove(first))
   override def element(): T =
-    throwOr(underlying.first)
+    throwOr(underlying(first))
   override def peek(): T =
-    nullOr(underlying.first)
+    nullOr(underlying(first))
 
   // Helper methods
   private def first = 0
