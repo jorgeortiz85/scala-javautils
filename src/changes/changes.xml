@@ -16,6 +16,8 @@
     see http://maven.apache.org/plugins/maven-changes-plugin/usage.html for full guide
   -->
     <release version="0.2-SNAPSHOT" date="" description="">
+      <action dev="Jorge Ortiz" type="fix">Removed all references to Deque for Java 1.5 compatibility</action>
+      <action dev="Kris Nuttycombe" type="add">Support for Scala and Java SortedSets</action>
       <action dev="Jorge Ortiz" type="add">Added explicit return types to all implicits</action>      
       <action dev="Jorge Ortiz" type="add">Added support for turning s.c.Map and s.c.m.Map into j.u.Dictionary</action>
       <action dev="Jorge Ortiz" type="add">Added support for turning j.u.Dictionary into s.c.Map and s.c.m.Map</action>
